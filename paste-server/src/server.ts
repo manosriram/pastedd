@@ -1,6 +1,6 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { NotFoundError } from "./errors/not_found_error";
-import { errorHandler } from "./middlewares/error_handler";
+import { error_handler } from "./middlewares/error_handler";
 import { create_paste_router } from "./routes/";
 
 import * as dotenv from "dotenv";
@@ -17,11 +17,12 @@ app.use(express.json());
 app.use("/p/", create_paste_router);
 
 // Not Route Hits
-app.all("*", async () => {
-    throw new NotFoundError();
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
+    next(new NotFoundError());
 });
 
+app.use(error_handler);
+
 startDB();
-app.use(errorHandler);
 app.listen(PORT, () => console.log(`Paste-Server at ${PORT}`));
 export { app };

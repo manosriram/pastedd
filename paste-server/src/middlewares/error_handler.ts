@@ -4,7 +4,7 @@ import { CustomError } from "../errors/custom_error";
 /*
     Error-Handler to handle erros consistently.
 */
-export const errorHandler = async (
+export const error_handler = async (
     err: Error,
     req: Request,
     res: Response,
@@ -16,8 +16,8 @@ export const errorHandler = async (
         });
     }
 
-    console.error(err);
-    res.status(400).send({
+    console.log("hitting");
+    return res.status(400).send({
         errors: [{ message: "Something went wrong" }]
     });
 };
