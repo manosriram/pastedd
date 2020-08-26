@@ -14,7 +14,7 @@ const PORT = process.env.PORT;
 // Fundamental Middlewares
 app.use(express.json());
 
-app.use(create_paste_router);
+app.use("/p/", create_paste_router);
 
 // Not Route Hits
 app.all("*", async () => {
