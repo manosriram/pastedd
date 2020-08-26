@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { nanoid } from "nanoid";
 
 interface PasteAttrs {
+    paste_id: String;
     paste_name: String;
     paste_created_at: Date;
     paste_expiry_at: Date;
@@ -11,6 +11,7 @@ interface PasteAttrs {
 }
 
 interface PasteDoc extends mongoose.Document {
+    paste_id: String;
     paste_name: String;
     paste_created_at: Date;
     paste_expiry_at: Date;
@@ -25,6 +26,10 @@ interface PasteModel extends mongoose.Model<PasteDoc> {
 
 const paste_schema = new mongoose.Schema(
     {
+        paste_id: {
+            type: String,
+            required: true
+        },
         paste_name: {
             type: String,
             required: true
@@ -54,9 +59,8 @@ const paste_schema = new mongoose.Schema(
     {
         toJSON: {
             transform(doc, ret) {
-                ret.id = nanoid(8);
-
                 delete ret._id;
+                delete ret.__v;
             }
         }
     }
