@@ -22,4 +22,9 @@ export default class PasteService {
     async delete_paste(paste_id: string) {
         return await Paste.findOneAndDelete({ paste_id });
     }
+
+    // Updates a paste by id.
+    async update_paste(paste_id: string, options: any) {
+        return await Paste.findOneAndUpdate({ paste_id }, { $set: options }, { new: true });
+    }
 }
