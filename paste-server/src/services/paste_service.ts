@@ -15,9 +15,11 @@ export default class PasteService {
 
     // Returns a Paste on id.
     async get_paste(paste_id: string) {
-        const paste = await Paste.findOne({ paste_id: paste_id });
+       return await Paste.findOne({ paste_id: paste_id });
+    }
 
-        if (!paste) return null;
-        else return paste;
+    // Deletes a paste by id.
+    async delete_paste(paste_id: string) {
+        return await Paste.findOneAndDelete({ paste_id });
     }
 }

@@ -4,24 +4,29 @@ import { EntityNotFoundError } from "../errors/entity_not_found";
 
 const router: express.Router = express.Router();
 
-router.get(
+router.delete(
     "/p/:paste_id",
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;
-            const paste = await new PasteService().get_paste(paste_id);
+            if (!paste_id) {
+                return res.status(400).json({
+                    message: "Paste ID required",
+                    success: false
+                });
+            }
 
-            if (!paste) throw new EntityNotFoundError("Paste not found");
+            const ll = await new PasteService().delete_paste(paste_id);
+            if (!ll) throw new EntityNotFoundError("Paste not found");
 
             return res.status(200).json({
-                paste,
+                message: "Paste deleted.",
                 success: true
             });
         } catch (err) {
-            console.log(err);
             next(err);
         }
     }
 );
 
-export { router as get_paste_router };
+export { router as delete_paste_router };
