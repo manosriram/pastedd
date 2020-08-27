@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { NotFoundError } from "./errors/not_found_error";
 import { error_handler } from "./middlewares/error_handler";
-import { create_paste_router } from "./routes/";
+import { create_paste_router, get_paste_router } from "./routes/";
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -14,7 +14,7 @@ const PORT = process.env.PORT;
 // Fundamental Middlewares
 app.use(express.json());
 
-app.use("/p/", create_paste_router);
+app.use(create_paste_router, get_paste_router);
 
 // Not Route Hits
 app.all("*", (req: Request, res: Response, next: NextFunction) => {

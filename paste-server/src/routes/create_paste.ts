@@ -5,7 +5,7 @@ import PasteService from "../services/paste_service";
 const router: express.Router = express.Router();
 
 router.post(
-    "/create_paste",
+    "/p/create_paste",
     validator,
     async (req: Request, res: Response, next: NextFunction) => {
         try {

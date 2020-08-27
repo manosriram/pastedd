@@ -59,6 +59,7 @@ const paste_schema = new mongoose.Schema(
     {
         toJSON: {
             transform(doc, ret) {
+                delete ret.paste_id;
                 delete ret._id;
                 delete ret.__v;
             }
