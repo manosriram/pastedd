@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from "express";
-import { NotAuthorizedError } from "../errors/not_authorized_error";
 
 // Middlewares
 import { role_check_guest, validator } from "../middlewares";

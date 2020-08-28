@@ -5,7 +5,6 @@ declare global {
     namespace Express {
         interface Request {
             current_user?: string;
-            done?: boolean;
         }
     }
 }
@@ -37,7 +36,6 @@ export function role_check_guest(
             throw new Error("Buffer Size exceeded");
         }
 
-        req.done = true;
         next();
     } catch (err) {
         next(err);

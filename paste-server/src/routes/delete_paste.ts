@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
 import PasteService from "../services/paste_service";
-import { EntityNotFoundError } from "../errors/entity_not_found";
 
 const router: express.Router = express.Router();
 
@@ -16,8 +15,11 @@ router.delete(
                 });
             }
 
-            const ll = await new PasteService().delete_paste(paste_id);
-            if (!ll) throw new EntityNotFoundError("Paste not found");
+            const paste = await new PasteService().delete_paste(paste_id);
+            if (!paste) {
+                req.statusCode = 404;
+                throw new Error("Paste Not Found");
+            }
 
             return res.status(200).json({
                 message: "Paste deleted.",

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
-import { RequestValidationError } from "../errors/request_validation_error";
 
 const validator = [
     check("paste_name")

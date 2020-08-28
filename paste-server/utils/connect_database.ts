@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { DatabaseConnectionError } from "../src/errors/database_connection_error";
 
 async function startDB() {
     try {
@@ -13,7 +12,7 @@ async function startDB() {
         });
         console.log("Paste-Server MongoDB Connected.");
     } catch (err) {
-        throw new DatabaseConnectionError();
+        throw new Error("Error connecting to database");
     }
 }
 

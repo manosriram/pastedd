@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from "express";
-import { RouteNotFoundError } from "./errors/not_found_error";
 import { error_handler } from "./middlewares/error_handler";
 import {
     create_paste_router,

@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
 import PasteService from "../services/paste_service";
-import { EntityNotFoundError } from "../errors/entity_not_found";
 
 const router: express.Router = express.Router();
 
@@ -11,7 +10,10 @@ router.get(
             const { paste_id } = req.params;
             const paste = await new PasteService().get_paste(paste_id);
 
-            if (!paste) throw new EntityNotFoundError("Paste not found");
+            if (!paste) {
+                req.statusCode = 404;
+                throw new Error("Paste not found");
+            }
 
             return res.status(200).json({
                 paste,

@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import PasteService from "../services/paste_service";
-import { EntityNotFoundError } from "../errors/entity_not_found";
+import { body } from "express-validator";
 
 const router: express.Router = express.Router();
 
@@ -9,14 +9,22 @@ router.post(
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;
-            const { options } = req.body;
-            console.log(options);
+
+            if (
+                !req.body ||
+                !req.body.paste_content ||
+                !req.body.paste_content.trim().length
+            )
+                throw new Error("Empty is paste not allowed");
             const paste = await new PasteService().update_paste(
                 paste_id,
-                options
+                req.body
             );
 
-            if (!paste) throw new EntityNotFoundError("Paste not found");
+            if (!paste) {
+                req.statusCode = 404;
+                throw new Error("Paste not found");
+            }
 
             return res.status(200).json({
                 paste,
