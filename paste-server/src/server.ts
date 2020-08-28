@@ -28,11 +28,17 @@ app.use(
 
 // Not Route Hits
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    next(new RouteNotFoundError());
+    const err: Error = new Error("Doesn't Exist.");
+    req.statusCode = 404;
+    next(err);
 });
 
-app.use(error_handler);
+app.use((err: Error, req: Request, res: Response) => {
+    if (!req.statusCode) req.statusCode = 500;
+    return res.status(req.statusCode).json({ error: err.message });
+});
 
 startDB();
 app.listen(PORT, () => console.log(`Paste-Server at ${PORT}`));
+
 export { app };

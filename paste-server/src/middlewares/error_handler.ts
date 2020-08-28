@@ -16,7 +16,6 @@ export const error_handler = async (
         });
     }
 
-    console.log("hitting");
     return res.status(400).send({
         errors: [{ message: "Something went wrong" }]
     });

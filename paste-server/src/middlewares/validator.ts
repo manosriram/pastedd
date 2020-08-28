@@ -10,15 +10,15 @@ const validator = [
         .notEmpty()
         .withMessage("Paste Content is required"),
     check("paste_type")
-        .notEmpty()
-        .withMessage("Paste Type is required"),
+        .isIn(["public", "unlisted", "private"])
+        .withMessage("Paste type not supported"),
     check("paste_syntax")
         .notEmpty()
         .withMessage("Paste Syntax is required"),
     (req: Request, res: Response, next: NextFunction) => {
         const errors = validationResult(req);
         if (errors.isEmpty()) next();
-        else throw new RequestValidationError(errors.array());
+        else throw new Error(errors.array()[0].msg);
     }
 ];
 

@@ -26,13 +26,14 @@ interface PasteModel extends mongoose.Model<PasteDoc> {
 
 const paste_schema = new mongoose.Schema(
     {
+        // Todo: created_by -> User Model.
         paste_id: {
             type: String,
             required: true
         },
         paste_name: {
             type: String,
-            required: true
+            default: "Untitled"
         },
         paste_created_at: {
             type: Date,
@@ -59,7 +60,6 @@ const paste_schema = new mongoose.Schema(
     {
         toJSON: {
             transform(doc, ret) {
-                delete ret.paste_id;
                 delete ret._id;
                 delete ret.__v;
             }

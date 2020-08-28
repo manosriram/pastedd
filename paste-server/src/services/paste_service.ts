@@ -1,21 +1,24 @@
 import { Paste } from "../models/Paste";
 import { nanoid } from "nanoid";
+const mseconds = 86400000;
 
 export default class PasteService {
     // Creates a Paste.
     async create_paste(paste_options: any) {
         paste_options.paste_created_at = new Date();
         paste_options.paste_expiry_at =
-            new Date().getTime() + paste_options.paste_expiry_at * 86400000;
+            new Date().getTime() + paste_options.paste_expiry_at * mseconds;
         paste_options.paste_id = nanoid(8);
 
-        const new_paste = Paste.build(paste_options); // Create new Paste
+        const new_paste = new Paste(paste_options);
         await new_paste.save();
+
+        return new_paste.paste_id;
     }
 
     // Returns a Paste on id.
     async get_paste(paste_id: string) {
-       return await Paste.findOne({ paste_id: paste_id });
+        return await Paste.findOne({ paste_id: paste_id });
     }
 
     // Deletes a paste by id.
@@ -25,6 +28,10 @@ export default class PasteService {
 
     // Updates a paste by id.
     async update_paste(paste_id: string, options: any) {
-        return await Paste.findOneAndUpdate({ paste_id }, { $set: options }, { new: true });
+        return await Paste.findOneAndUpdate(
+            { paste_id },
+            { $set: options },
+            { new: true }
+        );
     }
 }
