@@ -1,11 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import PasteService from "../services/paste_service";
-import { decrypt_buffer } from "../../utils/decrypt_buffer";
 
 const router: express.Router = express.Router();
 
 router.get(
-    "/p/:paste_id",
+    "/p/raw/:paste_id",
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;
@@ -16,14 +15,7 @@ router.get(
                 throw new Error("Paste not found");
             }
 
-            const decrypted_buffer = decrypt_buffer(
-                Buffer.from(paste.paste_content)
-            );
-            paste.paste_content = decrypted_buffer;
-            return res.status(200).json({
-                paste,
-                success: true
-            });
+            return res.status(200).send(paste.paste_content);
         } catch (err) {
             console.log(err);
             next(err);
@@ -31,4 +23,4 @@ router.get(
     }
 );
 
-export { router as get_paste_router };
+export { router as get_raw_paste_router };

@@ -5,11 +5,12 @@ import { role_check_guest, validator } from "../middlewares";
 
 //Services
 import PasteService from "../services/paste_service";
+import { encrypt_buffer } from "../../utils/encrypt_buffer";
 
 const router: express.Router = express.Router();
 
 router.post(
-    "/p/create_paste",
+    "/create_paste",
     validator,
     role_check_guest,
     async (req: Request, res: Response, next: NextFunction) => {
@@ -22,10 +23,11 @@ router.post(
                 paste_expiry_at // No of days after creating paste
             } = req.body;
 
+            const encrypted_buffer = encrypt_buffer(paste_content);
             const paste_service = new PasteService().create_paste({
                 paste_name,
                 paste_type,
-                paste_content,
+                paste_content: encrypted_buffer,
                 paste_syntax,
                 paste_expiry_at
             });

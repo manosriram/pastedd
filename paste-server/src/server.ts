@@ -4,7 +4,8 @@ import {
     create_paste_router,
     get_paste_router,
     delete_paste_router,
-    update_paste_router
+    update_paste_router,
+    get_raw_paste_router
 } from "./routes/";
 
 import * as dotenv from "dotenv";
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(
     create_paste_router,
     get_paste_router,
+    get_raw_paste_router,
     delete_paste_router,
     update_paste_router
 );

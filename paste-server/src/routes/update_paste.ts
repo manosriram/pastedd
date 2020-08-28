@@ -5,7 +5,7 @@ import { body } from "express-validator";
 const router: express.Router = express.Router();
 
 router.post(
-    "/p/update_paste/:paste_id",
+    "/update_paste/:paste_id",
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;
