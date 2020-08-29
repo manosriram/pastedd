@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import PasteService from "../services/paste_service";
 import { decrypt_buffer } from "../../utils/decrypt_buffer";
-import { error } from "../middlewares/error";
 
 const router: express.Router = express.Router();
 
