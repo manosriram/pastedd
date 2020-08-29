@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from "express";
-import { error_handler } from "./middlewares/error_handler";
 import {
     create_paste_router,
     get_paste_router,
@@ -7,6 +6,7 @@ import {
     update_paste_router,
     get_raw_paste_router
 } from "./routes/";
+import { error_handler } from "./middlewares/error-handler";
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -34,10 +34,7 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
     next(err);
 });
 
-app.use((err: Error, req: Request, res: Response) => {
-    if (!req.statusCode) req.statusCode = 500;
-    return res.status(req.statusCode).json({ error: err.message });
-});
+app.use(error_handler);
 
 startDB();
 app.listen(PORT, () => console.log(`Paste-Server at ${PORT}`));
