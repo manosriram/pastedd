@@ -5,10 +5,11 @@ const mseconds = 86400000;
 export default class PasteService {
     // Creates a Paste.
     async create_paste(paste_options: any) {
-        paste_options.paste_created_at = new Date();
+        paste_options.paste_created_at = new Date().getTime();
         paste_options.paste_expiry_at =
             new Date().getTime() + paste_options.paste_expiry_at * mseconds;
         paste_options.paste_id = nanoid(8);
+        paste_options.last_modified_at = paste_options.paste_created_at;
 
         const new_paste = new Paste(paste_options);
         await new_paste.save();
@@ -28,10 +29,12 @@ export default class PasteService {
 
     // Updates a paste by id.
     async update_paste(paste_id: string, options: any) {
-        return await Paste.findOneAndUpdate(
+        const paste = await Paste.findOneAndUpdate(
             { paste_id },
-            { $set: options },
+            { $set: options, last_modified_at: new Date().getTime() },
             { new: true }
         );
+
+        return paste;
     }
 }

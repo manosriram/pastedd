@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const mseconds = 86400000;
 
 interface PasteAttrs {
     paste_id: String;
@@ -8,6 +9,7 @@ interface PasteAttrs {
     paste_type: String;
     paste_content: String;
     paste_syntax: String;
+    last_modified_at: Number;
 }
 
 interface PasteDoc extends mongoose.Document {
@@ -18,6 +20,7 @@ interface PasteDoc extends mongoose.Document {
     paste_type: String;
     paste_content: String;
     paste_syntax: String;
+    last_modified_at: Number;
 }
 
 interface PasteModel extends mongoose.Model<PasteDoc> {
@@ -29,19 +32,28 @@ const paste_schema = new mongoose.Schema(
         // Todo: created_by -> User Model.
         paste_id: {
             type: String,
-            required: true
+            required: true,
+            immutable: true
         },
         paste_name: {
             type: String,
             default: "Untitled"
         },
         paste_created_at: {
-            type: Date,
-            default: Date.now
+            type: Number,
+            default: new Date().getTime(),
+            immutable: true
         },
         paste_expiry_at: {
-            type: Date,
-            required: true
+            type: Number,
+            required: false,
+            default: new Date().getTime() + 30 * mseconds
+        },
+        last_modified_at: {
+            type: Number,
+            default: new Date().getTime(),
+            immutable: false,
+            required: false
         },
         paste_type: {
             type: String,

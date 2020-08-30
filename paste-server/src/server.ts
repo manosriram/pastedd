@@ -7,6 +7,7 @@ import {
     get_raw_paste_router
 } from "./routes/";
 import { error_handler } from "./middlewares/error-handler";
+import { guest_paste_exp } from "./cron";
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -16,9 +17,13 @@ import { startDB } from "../utils/connect_database";
 const app = express();
 const PORT = process.env.PORT;
 
+// Cron Jobs
+guest_paste_exp();
+
 // Fundamental Middlewares
 app.use(express.json());
 
+// Routes
 app.use(
     create_paste_router,
     get_paste_router,
@@ -29,7 +34,7 @@ app.use(
 
 // Not Route Hits
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    const err: Error = new Error("Doesn't Exist.");
+    const err: Error = new Error("Page Doesn't Exist.");
     req.statusCode = 404;
     next(err);
 });

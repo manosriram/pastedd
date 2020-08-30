@@ -24,7 +24,7 @@ router.post(
             if (!paste) {
                 req.statusCode = 404;
                 throw new Error("Paste not found");
-            }
+            } 
 
             return res.status(200).json({
                 paste,
