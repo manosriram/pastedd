@@ -2,25 +2,29 @@ import mongoose from "mongoose";
 const mseconds = 86400000;
 
 interface PasteAttrs {
-    paste_id: String;
-    paste_name: String;
+    paste_id: string;
+    paste_name: string;
     paste_created_at: Date;
     paste_expiry_at: Date;
-    paste_type: String;
-    paste_content: String;
-    paste_syntax: String;
-    last_modified_at: Number;
+    paste_type: string;
+    paste_content: string;
+    paste_syntax: string;
+    last_modified_at: number;
+    paste_hits: number;
+    user: string;
 }
 
 interface PasteDoc extends mongoose.Document {
-    paste_id: String;
-    paste_name: String;
+    paste_id: string;
+    paste_name: string;
     paste_created_at: Date;
     paste_expiry_at: Date;
-    paste_type: String;
-    paste_content: String;
-    paste_syntax: String;
-    last_modified_at: Number;
+    paste_type: string;
+    paste_content: string;
+    paste_syntax: string;
+    last_modified_at: number;
+    paste_hits: number;
+    user: string;
 }
 
 interface PasteModel extends mongoose.Model<PasteDoc> {
@@ -67,6 +71,16 @@ const paste_schema = new mongoose.Schema(
         paste_syntax: {
             type: String,
             required: true
+        },
+        paste_hits: {
+            type: Number,
+            default: 0
+        },
+        user: {
+            // Email of user if signed-in.
+            type: String,
+            required: false,
+            default: null
         }
     },
     {
