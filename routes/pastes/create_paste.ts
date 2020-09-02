@@ -2,8 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 
 // Middlewares
 import {
-    role_check_user,
     role_check_guest,
+    can_paste,
     validator
 } from "../../middlewares/pastes/";
 
@@ -16,8 +16,8 @@ const router: express.Router = express.Router();
 router.post(
     "/create_paste",
     validator,
-    role_check_guest,
-    // role_check_user,
+    can_paste,
+    // role_check_guest,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const {

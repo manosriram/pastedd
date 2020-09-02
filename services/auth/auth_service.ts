@@ -2,6 +2,7 @@ import { Request } from "express";
 import { User } from "../../models/User";
 import { PasswordService } from "../../services/auth/";
 import jwt from "jsonwebtoken";
+import { UserPayload } from "../../types";
 
 class AuthService {
     async sign_up(options: any) {
@@ -11,8 +12,6 @@ class AuthService {
     }
 
     async sign_in(username: string, password: string, req: Request) {
-        if (req.session?.jwt)
-            return { success: false, message: "User already logged-in" };
         const user = await User.findOne({ username });
         if (!user) return { success: false };
 
@@ -21,7 +20,8 @@ class AuthService {
             return { message: "Incorrect Password", success: false };
         else {
             const payload = {
-                user_name: user.user_name
+                user_name: user.user_name,
+                email: user.email
             };
             const user_token = jwt.sign(payload, process.env.JWT_KEY!);
             req.session = {
@@ -53,8 +53,12 @@ class AuthService {
     async current_user(req: Request) {
         if (!req.session?.jwt) return null;
 
-        const payload = jwt.verify(req.session?.jwt, process.env.JWT_KEY!);
-        return payload;
+        const payload = jwt.verify(
+            req.session?.jwt,
+            process.env.JWT_KEY!
+        ) as UserPayload;
+
+        return this.get_user(payload.user_name);
     }
 }
 

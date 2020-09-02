@@ -6,7 +6,7 @@ import { decrypt_buffer } from "../../utils/";
 const router: express.Router = express.Router();
 
 router.get(
-    "/p/:paste_id",
+    "/:paste_id",
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;

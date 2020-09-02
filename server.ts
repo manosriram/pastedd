@@ -36,7 +36,7 @@ import { startDB } from "./utils/start_db";
 
 // Routes
 app.use(
-    "/auth",
+    "/u/",
     signup_router,
     signin_router,
     signout_router,
@@ -44,7 +44,7 @@ app.use(
     usermetadata_router
 );
 app.use(
-    "/paste/",
+    "/p/",
     create_paste_router,
     get_paste_router,
     get_raw_paste_router,

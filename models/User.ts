@@ -61,15 +61,15 @@ const user_schema = new mongoose.Schema(
             default: "free"
         },
         paste_count: {
-            public: {
+            public_pcount: {
                 type: Number,
                 default: 0
             },
-            private: {
+            private_pcount: {
                 type: Number,
                 default: 0
             },
-            unlisted: {
+            unlisted_pcount: {
                 type: Number,
                 default: 0
             }
