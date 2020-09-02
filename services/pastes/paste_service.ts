@@ -1,5 +1,6 @@
 import { Paste } from "../../models/Paste";
 import { nanoid } from "nanoid";
+import { decrypt_buffer } from "../../utils/decrypt_buffer";
 const mseconds = 86400000;
 
 class PasteService {
@@ -39,6 +40,16 @@ class PasteService {
         );
 
         return paste;
+    }
+
+    async get_user_paste(user_name: string) {
+        const pastes = await Paste.find({ user: user_name });
+        pastes.map((paste, paste_index) => {
+            paste.paste_content = decrypt_buffer(
+                Buffer.from(paste.paste_content, "utf8")
+            );
+        });
+        return pastes;
     }
 }
 

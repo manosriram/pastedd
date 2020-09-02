@@ -5,7 +5,7 @@ import { TYPE_PASTE, UserPayload, Limits_FREE } from "../../types";
 declare global {
     namespace Express {
         interface Request {
-            current_user?: UserPayload;
+            current_user_name?: string;
         }
     }
 }
@@ -20,8 +20,8 @@ class PasteAccessService {
         const { private_pcount, unlisted_pcount } = user.paste_count;
 
         if (
-            private_pcount > Limits_FREE.PRIVATE_LIMIT ||
-            unlisted_pcount > Limits_FREE.UNLISTED_LIMIT
+            private_pcount >= Limits_FREE.PRIVATE_LIMIT ||
+            unlisted_pcount >= Limits_FREE.UNLISTED_LIMIT
         ) {
             return false;
         }
@@ -43,7 +43,11 @@ class PasteAccessService {
     async can_paste(req: Request) {
         const auth_service = create_auth_service();
         const current_user = await auth_service.current_user(req);
-        return this.can_user_paste_free(current_user, req.body.paste_type);
+        if (!current_user) return false;
+        else {
+            req.current_user_name = current_user?.user_name;
+            return this.can_user_paste_free(current_user, req.body.paste_type);
+        }
     }
 }
 

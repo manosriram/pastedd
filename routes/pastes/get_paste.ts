@@ -14,7 +14,7 @@ router.get(
 
             if (!paste) {
                 res.statusCode = 404;
-                next(new Error("Paste not found"));
+                return next(new Error("Paste not found"));
             }
 
             paste!.paste_hits += 1;

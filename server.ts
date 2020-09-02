@@ -22,7 +22,8 @@ import {
     get_paste_router,
     delete_paste_router,
     update_paste_router,
-    get_raw_paste_router
+    get_raw_paste_router,
+    get_user_pastes
 } from "./routes/pastes";
 import {
     signup_router,
@@ -49,7 +50,8 @@ app.use(
     get_paste_router,
     get_raw_paste_router,
     delete_paste_router,
-    update_paste_router
+    update_paste_router,
+    get_user_pastes
 );
 
 app.use(error_handler);

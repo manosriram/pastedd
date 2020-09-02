@@ -16,8 +16,8 @@ const router: express.Router = express.Router();
 router.post(
     "/create_paste",
     validator,
+    role_check_guest,
     can_paste,
-    // role_check_guest,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const {
@@ -34,7 +34,8 @@ router.post(
                 paste_type,
                 paste_content: encrypted_buffer,
                 paste_syntax,
-                paste_expiry_at
+                paste_expiry_at,
+                user: req.session ? req.current_user_name : null
             });
             const paste_id = await paste_service;
 

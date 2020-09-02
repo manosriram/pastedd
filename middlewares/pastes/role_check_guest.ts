@@ -13,7 +13,7 @@ export function role_check_guest(
 ) {
     try {
         // If user is signed-in.
-        if (req.session) next();
+        if (req.session?.jwt) return next();
 
         // Limits Guest user.
         const { paste_content, paste_type } = req.body;

@@ -73,6 +73,12 @@ const user_schema = new mongoose.Schema(
                 type: Number,
                 default: 0
             }
+        },
+        paste_after: {
+            type: Number
+        },
+        paste_before: {
+            type: Number
         }
     },
     {
