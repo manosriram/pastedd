@@ -24,10 +24,12 @@ class AuthService {
                 email: user.email
             };
             const user_token = jwt.sign(payload, process.env.JWT_KEY!);
+            if (req.session?.jwt) throw new Error("User Already signed-in");
+
             req.session = {
                 jwt: user_token
             };
-            req.session.save();
+            await req.session.save();
             return { success: true, message: "User logged-in successfully" };
         }
     }

@@ -27,6 +27,8 @@ interface UserModel extends mongoose.Model<UserDoc> {
     build(attr: UserAttrs): UserDoc;
 }
 
+const now = new Date().getTime();
+const tom = new Date(now).setDate(new Date(now).getDate() + 1);
 const user_schema = new mongoose.Schema(
     {
         user_name: {
@@ -43,7 +45,7 @@ const user_schema = new mongoose.Schema(
         },
         created_at: {
             type: Number,
-            default: new Date().getTime(),
+            default: now,
             immutable: true
         },
         is_banned: {
@@ -72,13 +74,23 @@ const user_schema = new mongoose.Schema(
             unlisted_pcount: {
                 type: Number,
                 default: 0
+            },
+            pd_public_pcount: {
+                type: Number,
+                default: 0
+            },
+            pd_private_pcount: {
+                type: Number,
+                default: 0
+            },
+            pd_unlisted_pcount: {
+                type: Number,
+                default: 0
             }
         },
-        paste_after: {
-            type: Number
-        },
-        paste_before: {
-            type: Number
+        per_day_session: {
+            type: Number,
+            default: tom
         }
     },
     {
@@ -107,7 +119,6 @@ user_schema.pre("save", async function(done) {
 user_schema.statics.build = (attrs: UserAttrs) => {
     return new User(attrs);
 };
-
 const User = mongoose.model<UserDoc, UserModel>("User", user_schema);
 
 export { User };

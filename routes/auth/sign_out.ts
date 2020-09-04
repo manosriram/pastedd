@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 const router: express.Router = express.Router();
 
-router.get(
+router.all(
     "/signout",
     async (req: Request, res: Response, next: NextFunction) => {
         try {

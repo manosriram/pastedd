@@ -3,7 +3,7 @@ import { PasteService } from "../../services/pastes/";
 const router: express.Router = express.Router();
 
 router.get(
-    "/pu/:user_name",
+    "/user/:user_name",
     async (req: Request, res: Response, next: NextFunction) => {
         const { user_name } = req.params;
 

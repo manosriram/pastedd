@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { AuthService } from "../auth";
+import { AuthService } from "../auth/";
 import { TYPE_PASTE, UserPayload, Limits_FREE } from "../../types";
 
 declare global {
@@ -16,37 +16,89 @@ function create_auth_service() {
 }
 
 class PasteAccessService {
-    async can_user_paste_free(user: any, paste_t: string) {
-        const { private_pcount, unlisted_pcount } = user.paste_count;
+    async per_day_check(user: any) {
+        console.log(user);
+        const now = new Date().getTime();
+        if (user.per_day_session - now > 86400000) {
+            const aa_date = new Date(user.per_day_session);
+            aa_date.setDate(new Date().getDate());
+            user.per_day_session = aa_date.getTime();
 
-        if (
-            private_pcount >= Limits_FREE.PRIVATE_LIMIT ||
-            unlisted_pcount >= Limits_FREE.UNLISTED_LIMIT
-        ) {
+            user.paste_count!.pd_public_pcount = 0;
+            user.paste_count!.pd_private_pcount = 0;
+            user.paste_count!.pd_unlisted_pcount = 0;
+
+            await user.save();
             return false;
+        } else {
+            const {
+                pd_public_pcount,
+                pd_private_pcount,
+                pd_unlisted_pcount
+            } = user.paste_count;
+            console.log(
+                pd_public_pcount + pd_unlisted_pcount + pd_private_pcount
+            );
+            if (
+                pd_public_pcount + pd_unlisted_pcount + pd_private_pcount >=
+                Limits_FREE.PER_DAY_LIMIT
+            ) {
+                return false;
+            } else {
+                return true;
+            }
         }
+    }
+
+    async can_user_paste_free(user: any, paste_t: string) {
         switch (paste_t) {
             case TYPE_PASTE.PRIVATE:
-                user.paste_count.private_pcount += 1;
+                if (
+                    user.paste_count!.private_pcount >=
+                    Limits_FREE.PRIVATE_LIMIT
+                )
+                    return false;
+                user.paste_count!.private_pcount += 1;
+                user.paste_count!.pd_private_pcount += 1;
                 break;
             case TYPE_PASTE.UNLISTED:
-                user.paste_count.unlisted_pcount += 1;
+                if (
+                    user.paste_count!.unlisted_pcount >=
+                    Limits_FREE.UNLISTED_LIMIT
+                )
+                    return false;
+                user.paste_count!.unlisted_pcount += 1;
+                user.paste_count!.pd_unlisted_pcount += 1;
                 break;
             default:
-                user.paste_count.public_pcount += 1;
+                user.paste_count!.public_pcount += 1;
+                user.paste_count!.pd_public_pcount += 1;
                 break;
         }
         await user.save();
+
         return true;
     }
 
     async can_paste(req: Request) {
-        const auth_service = create_auth_service();
-        const current_user = await auth_service.current_user(req);
-        if (!current_user) return false;
-        else {
-            req.current_user_name = current_user?.user_name;
-            return this.can_user_paste_free(current_user, req.body.paste_type);
+        try {
+            const auth_service = create_auth_service();
+            const current_user = await auth_service.current_user(req);
+            if (!current_user || !current_user.is_banned) return false;
+            else {
+                req.current_user_name = current_user?.user_name;
+                const pdc = await this.per_day_check(current_user!);
+                if (pdc) {
+                    console.log("still in");
+                    return this.can_user_paste_free(
+                        current_user,
+                        req.body.paste_type
+                    );
+                } else return false;
+            }
+        } catch (e) {
+            console.log(e);
+            throw new Error(e);
         }
     }
 }
