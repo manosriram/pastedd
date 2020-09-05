@@ -10,6 +10,7 @@ interface UserAttrs {
     ip_address: string;
     user_tier: string;
     paste_count: object;
+    per_day_session: number;
 }
 
 interface UserDoc extends mongoose.Document {
@@ -21,6 +22,7 @@ interface UserDoc extends mongoose.Document {
     ip_address: string;
     user_tier: string;
     paste_count: object;
+    per_day_session: number;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {

@@ -36,9 +36,6 @@ class PasteAccessService {
                 pd_private_pcount,
                 pd_unlisted_pcount
             } = user.paste_count;
-            console.log(
-                pd_public_pcount + pd_unlisted_pcount + pd_private_pcount
-            );
             if (
                 pd_public_pcount + pd_unlisted_pcount + pd_private_pcount >=
                 Limits_FREE.PER_DAY_LIMIT
@@ -87,9 +84,9 @@ class PasteAccessService {
             if (!current_user || !current_user.is_banned) return false;
             else {
                 req.current_user_name = current_user?.user_name;
+                // If the per-day-paste limit is satisfied, check the user's free paste limitations.
                 const pdc = await this.per_day_check(current_user!);
                 if (pdc) {
-                    console.log("still in");
                     return this.can_user_paste_free(
                         current_user,
                         req.body.paste_type

@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { PasteAccessService } from "../../services/pastes/";
 
 async function can_paste(req: Request, res: Response, next: NextFunction) {
@@ -9,7 +9,6 @@ async function can_paste(req: Request, res: Response, next: NextFunction) {
     const can_user_paste = await service.can_paste(req);
 
     if (can_user_paste) {
-        console.log("inside");
         next();
     } else return next(new Error("Access denied, exceeded paste quota"));
 }
