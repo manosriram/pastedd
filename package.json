@@ -5,6 +5,7 @@
     "main": "server.ts",
     "scripts": {
         "dev": "ts-node-dev --poll ./server.ts",
+        "client": "cd ./client && npm start",
         "test": "jest --watchAll --no-cache"
     },
     "author": "Mano Sriram",

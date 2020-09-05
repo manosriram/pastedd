@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 5px;
+}
+
+.signup-container {
+    margin: 5%;
+    padding: 1%;
+    width: 25%;
+    height: 20vh;
+    float: left;
+    margin-left: 15%;
+}
+
+#related-links {
+    margin: 5%;
+    padding: 1%;
+    width: 25%;
+    height: 20vh;
+    float: right;
+    margin-right: 15%;
+}
+.App {
+    margin: 2%;
+    padding: 1%;
+    width: 65%;
+    margin-left: 2%;
+    float: left;
+}
+
+#vl {
+    width: 1;
+    size: 500;
+}
