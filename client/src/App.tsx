@@ -2,12 +2,13 @@ import React from "react";
 import { Navbar, Home, Test, Signup, Signin } from "./Components/";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./Styles/App.css";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
     return (
         <>
-            <Navbar />
             <Router>
+                <Navbar />
                 <Switch>
                     <Route exact path="/signup/" component={Signup} />
                     <Route exact path="/signin/" component={Signin} />

@@ -3,8 +3,9 @@ import { signup_validator } from "../../middlewares/auth/";
 import { AuthService } from "../../services/auth/";
 const router: express.Router = express.Router();
 
+// @ -> /u/signup
 router.post(
-    "/signup",
+    "/",
     signup_validator,
     async (req: Request, res: Response, next: NextFunction) => {
         try {

@@ -3,15 +3,20 @@ import { signin_validator } from "../../middlewares/auth/";
 import { AuthService } from "../../services/auth/";
 const router: express.Router = express.Router();
 
+// @ -> /u/signin
 router.post(
-    "/signin",
+    "/",
     signin_validator,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { username, password } = req.body;
+            const { user_name, password } = req.body;
 
             const service = new AuthService();
-            const auth_service = await service.sign_in(username, password, req);
+            const auth_service = await service.sign_in(
+                user_name,
+                password,
+                req
+            );
             const signin_service = auth_service;
 
             const is_logged_in = signin_service.success;

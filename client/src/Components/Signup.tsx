@@ -38,7 +38,10 @@ function Signup() {
             e.preventDefault();
             const { email, user_name, password } = user_det;
             if (!email || !user_name || !password) {
-                message_toast.show({ intent: "danger", message: "Please fill all the fields. " });
+                message_toast.show({
+                    intent: "danger",
+                    message: "Please fill all the fields."
+                });
                 return;
             }
             const response = await fetch_url("/u/signup", "POST", {
@@ -47,8 +50,16 @@ function Signup() {
                 password
             });
             console.log(response);
-            if (response.success) message_toast.show({ intent: "success", message: response.message });
-            else message_toast.show({ intent: "danger", message: response.message });
+            if (response.success)
+                message_toast.show({
+                    intent: "success",
+                    message: response.message
+                });
+            else
+                message_toast.show({
+                    intent: "danger",
+                    message: response.message
+                });
         } catch (e) {
             console.log(e);
         }

@@ -30,28 +30,26 @@ import {
     signin_router,
     signout_router,
     getuser_router,
-    usermetadata_router
+    current_user_router
 } from "./routes/auth";
 
 import { startDB } from "./utils/start_db";
 
 // Routes
-app.use(
-    "/u/",
-    signup_router,
-    signin_router,
-    signout_router,
-    getuser_router,
-    usermetadata_router
-);
+app.use("/u/current_user", current_user_router);
+app.use("/u/signup", signup_router);
+app.use("/u/signin", signin_router);
+app.use("/u/signout", signout_router);
+app.use("/u/:user_name", getuser_router);
+
 app.use(
     "/p/",
-    create_paste_router,
+    get_user_pastes,
     get_paste_router,
     get_raw_paste_router,
+    create_paste_router,
     delete_paste_router,
-    update_paste_router,
-    get_user_pastes
+    update_paste_router
 );
 
 app.use(error_handler);

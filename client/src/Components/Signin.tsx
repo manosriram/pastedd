@@ -37,15 +37,26 @@ function Signin() {
             e.preventDefault();
             const { user_name, password } = user_det;
             if (!user_name || !password) {
-                message_toast.show({ intent: "danger", message: "Please fill all the fields. " });
+                message_toast.show({
+                    intent: "danger",
+                    message: "Please fill all the fields."
+                });
                 return;
             }
             const response = await fetch_url("/u/signin", "POST", {
                 user_name,
                 password
             });
-            if (response.success) message_toast.show({ intent: "success", message: response.message });
-            else message_toast.show({ intent: "danger", message: response.message });
+            if (response.success)
+                message_toast.show({
+                    intent: "success",
+                    message: response.message
+                });
+            else
+                message_toast.show({
+                    intent: "danger",
+                    message: response.message
+                });
         } catch (e) {
             console.log(e);
         }
