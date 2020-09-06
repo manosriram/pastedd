@@ -1,4 +1,4 @@
-async function fetch_url(url: string, method: string, body: any) {
+async function fetch_url(url: string, method: string, body: any = null) {
     const response = await fetch(url, {
         method,
         headers: {

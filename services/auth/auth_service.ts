@@ -11,10 +11,11 @@ class AuthService {
         return new_user;
     }
 
-    async sign_in(username: string, password: string, req: Request) {
-        const user = await User.findOne({ username });
-        if (!user) return { success: false };
+    async sign_in(user_name: string, password: string, req: Request) {
+        const user = await User.findOne({ user_name });
+        if (!user) return { success: false, message: "User not found" };
 
+        console.log(user);
         const password_match = PasswordService.compare(user.password, password);
         if (!password_match)
             return { message: "Incorrect Password", success: false };

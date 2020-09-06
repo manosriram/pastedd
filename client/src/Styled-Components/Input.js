@@ -11,6 +11,7 @@ const Input = styled.input`
   border-bottom-width: 1.5px;
   border-left-width: 10px;
   margin-bottom: 15px;
+  padding-left: 3px;
 
   &::placeholder {
       font-size: 15px;

@@ -9,6 +9,7 @@ router.post(
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { email, password, user_name } = req.body;
+            console.log(email, user_name, password);
 
             // Auth Service to handle DB Calls.
             const service = new AuthService();
@@ -38,7 +39,11 @@ router.post(
             const new_user = await signup_user_service;
 
             // Return the new_user (No Password, See User Model "toJSON")
-            return res.status(201).json({ user: new_user, success: true });
+            return res.status(201).json({
+                user: new_user,
+                success: true,
+                message: "User Successfully signedup, login to continue."
+            });
         } catch (err) {
             next(err);
         }

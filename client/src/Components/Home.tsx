@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { Button, LinkTag, TextArea } from "../Styled-Components";
+import { Input, Button, LinkTag, TextArea } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
-import { LatestPosts } from "./";
 import "../Styles/App.css";
 
 function Home() {
@@ -41,6 +40,7 @@ function Home() {
                 </select>
                 <br />
                 <br />
+
                 <label htmlFor="">Paste Name: </label>
                 {"   "}
                 <input type="text" placeholder="Paste Name" required />
@@ -66,7 +66,6 @@ function Home() {
                 <br />
                 <Button type="submit">Create Paste</Button>
             </form>
-            <hr id="vl" />
         </div>
 </>
     );

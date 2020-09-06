@@ -36,3 +36,8 @@ body {
     width: 1;
     size: 500;
 }
+
+input[type="text"] {
+    padding: 5px;
+    outline: none;
+}

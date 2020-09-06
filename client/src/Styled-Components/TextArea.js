@@ -7,6 +7,7 @@ const TextArea = styled.textarea`
     height: 40vh;
     resize: none;
     outline: none;
+    padding: 5px;
 `;
 
 export default TextArea;

@@ -12,7 +12,7 @@ router.post(
 
             const service = new AuthService();
             const auth_service = await service.sign_in(username, password, req);
-            const signin_service = await auth_service;
+            const signin_service = auth_service;
 
             const is_logged_in = signin_service.success;
             if (!is_logged_in) return next(new Error(signin_service.message));

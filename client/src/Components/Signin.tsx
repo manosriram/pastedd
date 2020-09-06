@@ -21,32 +21,29 @@ const message_toast = Toaster.create({
     position: Position.TOP
 });
 
-function Signup() {
+function Signin() {
     const [user_det, set_user_det] = useState<any>({
-        email: "",
         user_name: "",
         password: ""
     });
-    const [is_signed_up, set_signed_up] = useState<boolean>(false);
+    const [is_signed_in, set_signed_in] = useState<boolean>(false);
 
-    const handle_signup = (e: any) => {
+    const handle_signin = (e: any) => {
         set_user_det({ ...user_det, [e.target.name]: e.target.value });
     };
 
     const submit_form = async (e: any) => {
         try {
             e.preventDefault();
-            const { email, user_name, password } = user_det;
-            if (!email || !user_name || !password) {
+            const { user_name, password } = user_det;
+            if (!user_name || !password) {
                 message_toast.show({ intent: "danger", message: "Please fill all the fields. " });
                 return;
             }
-            const response = await fetch_url("/u/signup", "POST", {
-                email,
+            const response = await fetch_url("/u/signin", "POST", {
                 user_name,
                 password
             });
-            console.log(response);
             if (response.success) message_toast.show({ intent: "success", message: response.message });
             else message_toast.show({ intent: "danger", message: response.message });
         } catch (e) {
@@ -57,25 +54,19 @@ function Signup() {
     return (
         <>
             <div className="signup-container">
-                <form action="" onChange={handle_signup} onSubmit={submit_form}>
-                    <h3>Signup Page</h3>
+                <form action="" onChange={handle_signin} onSubmit={submit_form}>
+                    <h3>Signin Page</h3>
                     <hr />
-                    <Input
-                        type="email"
-                        name="email"
-                        placeholder="Email Address"
-                        required
-                    />
                     <Input
                         type="text"
                         name="user_name"
-                        placeholder="Username (4 min)"
+                        placeholder="Username"
                         required
                     />
                     <Input
                         type="password"
                         name="password"
-                        placeholder="Password (4 min)"
+                        placeholder="Password"
                         required
                     />
                     <br />
@@ -86,14 +77,14 @@ function Signup() {
                         icon="send-to"
                         intent="success"
                     >
-                        Signup
+                        Signin
                     </Button>
                 </form>
             </div>
             <div id="related-links">
                 <h3>Related Links</h3>
                 <hr />
-                <LinkTag href="/signin">SignIn</LinkTag>
+                <LinkTag href="/signup">Signup</LinkTag>
                 <br />
                 <br />
                 <LinkTag href="/forgot-pass">Forgot Password</LinkTag>
@@ -108,7 +99,7 @@ function Signup() {
                     </a>
                     <a className="btn btn-danger" href="/">
                         {" "}
-                        Signup with Google
+                        Signin with Google
                     </a>
                 </div>
                 <br />
@@ -118,7 +109,7 @@ function Signup() {
                         <i className="fab fa-twitter"></i>
                     </a>
                     <a className="btn btn-primary" href="/">
-                        Signup with Twitter
+                        Signin with Twitter
                     </a>
                 </div>
             </div>
@@ -126,4 +117,4 @@ function Signup() {
     );
 }
 
-export default Signup;
+export default Signin;
