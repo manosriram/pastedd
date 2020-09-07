@@ -1,3 +1,4 @@
+import { Paste } from "./";
 import React, { useState, useEffect, useContext } from "react";
 import { Input, LinkTag, TextArea } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
