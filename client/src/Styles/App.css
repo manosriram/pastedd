@@ -41,3 +41,6 @@ input[type="text"] {
     padding: 5px;
     outline: none;
 }
+#hits {
+    float: right;
+}

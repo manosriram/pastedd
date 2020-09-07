@@ -14,7 +14,7 @@ interface PasteForm {
     paste_type: string;
 }
 
-const Home = () => {
+const Home = (props: any) => {
     const [user, set_user] = useState<boolean>(is_user());
     const [paste_id, set_paste_id] = useState<string>("");
     const [paste_form, set_paste_form] = useState<PasteForm>({
@@ -33,7 +33,9 @@ const Home = () => {
                 "POST",
                 paste_form
             );
-            if (response.success) set_paste_id(response.paste_id);
+            if (response.success) {
+                props.history.push(`/p/${response.paste_id}`);
+            }
         } catch (e) {
             console.log(e);
         }
@@ -42,10 +44,6 @@ const Home = () => {
     const handle_paste_form = async (e: any) => {
         set_paste_form({ ...paste_form, [e.target.name]: e.target.value });
     };
-
-    if (paste_id) {
-        return <Paste paste_id={paste_id} />;
-    }
 
     return (
         <>

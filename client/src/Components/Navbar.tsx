@@ -3,6 +3,7 @@ import { fetch_url } from "../utils/";
 import "../Styles/navbar.css";
 import { Link } from "react-router-dom";
 import Cookie from "js-cookie";
+import { Icon } from "@blueprintjs/core";
 
 function Navbar(props: any) {
     const [is_user, set_is_user] = useState<boolean>(false);
@@ -16,7 +17,9 @@ function Navbar(props: any) {
 
     return (
         <div className="nav">
-            <Link to="/">+Paste</Link>
+            <Link to="/">
+                <Icon icon="add" />
+            </Link>
             <Link to="/signin">Signin</Link>
             <Link to="/signup">Signup</Link>
             {is_user && (

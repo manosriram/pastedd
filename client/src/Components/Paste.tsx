@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { get_paste } from "../utils/";
 import { useHistory, useParams } from "react-router-dom";
+import { TextArea } from "../Styled-Components";
+import { Icon, Tabs, Tab, Tag } from "@blueprintjs/core";
+import "../Styles/App.css";
 
 function Paste(props: any) {
     const { paste_id } = useParams();
@@ -26,7 +29,9 @@ function Paste(props: any) {
 
     return (
         <div className="App">
-            <h1>{paste.paste_name}</h1>
+            <Tag>{paste.paste_name}</Tag>
+            <label id="hits" htmlFor="icon">{paste.paste_hits} hits</label>
+            <TextArea readOnly={true} defaultValue={paste.paste_content} />
         </div>
     );
 }
