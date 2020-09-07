@@ -1,8 +1,9 @@
 import { fetch_url } from "./";
+import Cookie from "js-cookie";
 
-async function is_user() {
-    const is_user = await fetch_url("/u/current_user", "GET", null);
-    return is_user === null;
+function is_user() {
+    const user = Cookie.get("express:sess") !== undefined;
+    return user;
 }
 
 export default is_user;

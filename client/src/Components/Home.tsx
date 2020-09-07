@@ -3,26 +3,59 @@ import { Input, LinkTag, TextArea } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
 import "../Styles/App.css";
 import { Button } from "@blueprintjs/core";
-import { get_user } from "../utils/Auth";
+const mseconds = 3600000;
+
+interface PasteForm {
+    paste_syntax: string;
+    paste_name: string;
+    paste_content: string;
+    paste_expiry_at: number;
+    paste_type: string;
+}
 
 const Home = () => {
-    const [user, set_user] = useState<any>({});
+    const [user, set_user] = useState<boolean>(is_user());
+    const [paste_id, set_paste_id] = useState<string>("");
+    const [paste_form, set_paste_form] = useState<PasteForm>({
+        paste_syntax: "Plaintext",
+        paste_name: "",
+        paste_content: "",
+        paste_type: "",
+        paste_expiry_at: mseconds
+    });
 
-    useEffect(() => {
-        const current_user = async () => {
-            const response = await get_user();
-            set_user(response.user);
-        };
+    const submit_paste_form = async (e: any) => {
+        try {
+            e.preventDefault();
+            const response = await fetch_url(
+                "/p/create_paste",
+                "POST",
+                paste_form
+            );
+            if (response.success) set_paste_id(response.paste_id);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
-        current_user();
-    }, []);
+    const handle_paste_form = async (e: any) => {
+        set_paste_form({ ...paste_form, [e.target.name]: e.target.value });
+    };
+
+    if (paste_id) {
+        return <Paste paste_id={paste_id} />;
+    }
 
     return (
         <>
             <div className="App">
                 <h4>Create a Paste</h4>
-                <form action="">
-                    <TextArea />
+                <form
+                    action=""
+                    onChange={handle_paste_form}
+                    onSubmit={submit_paste_form}
+                >
+                    <TextArea name="paste_content" />
                     <br />
                     <br />
 
@@ -30,17 +63,21 @@ const Home = () => {
                     {"   "}
                     <select
                         id="languages"
-                        name="languages"
                         defaultValue="Plaintext"
+                        name="paste_syntax"
                     >
                         {languages_list.map(lang => {
                             return <option value={lang}>{lang}</option>;
                         })}
                     </select>
                     {"  "}
-                    <select id="exposure" name="exposure" defaultValue="public">
+                    <select
+                        id="exposure"
+                        defaultValue="public"
+                        name="paste_type"
+                    >
                         <option value="public">Public</option>;
-                        <option value="private" disabled={true}>
+                        <option value="private" disabled={!user}>
                             Private
                         </option>
                         <option value="unlisted">Unlisted</option>;
@@ -50,15 +87,20 @@ const Home = () => {
 
                     <label htmlFor="">Paste Name: </label>
                     {"   "}
-                    <input type="text" placeholder="Paste Name" required />
+                    <input
+                        type="text"
+                        placeholder="Paste Name"
+                        name="paste_name"
+                        required
+                    />
                     <br />
                     <br />
                     <label htmlFor="">Expire After: </label>
                     {"   "}
                     <select
                         id="expiration"
-                        name="expiration"
                         defaultValue="3600000"
+                        name="paste_expiry_at"
                     >
                         <option value="3600000">1 Hour</option>;
                         <option value="21600000">6 Hours</option>;

@@ -4,7 +4,7 @@ import { PasteService } from "../../services/pastes/";
 const router: express.Router = express.Router();
 
 router.post(
-    "/update_paste/:paste_id",
+    "/",
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;

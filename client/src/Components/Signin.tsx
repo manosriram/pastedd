@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input, LinkTag } from "../Styled-Components/";
 import "../Styles/App.css";
 import { fetch_url } from "../utils/";
+import { Navbar } from "./";
 
 import {
     Button,
@@ -47,12 +48,12 @@ function Signin() {
                 user_name,
                 password
             });
-            if (response.success)
+            if (response.success) {
                 message_toast.show({
                     intent: "success",
                     message: response.message
                 });
-            else
+            } else
                 message_toast.show({
                     intent: "danger",
                     message: response.message

@@ -51,7 +51,6 @@ const paste_schema = new mongoose.Schema(
         paste_expiry_at: {
             type: Number,
             required: false,
-            default: new Date().getTime() + 30 * mseconds
         },
         last_modified_at: {
             type: Number,

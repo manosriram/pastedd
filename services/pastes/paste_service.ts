@@ -8,7 +8,7 @@ class PasteService {
     async create_paste(paste_options: any) {
         paste_options.paste_created_at = new Date().getTime();
         paste_options.paste_expiry_at =
-            new Date().getTime() + paste_options.paste_expiry_at * mseconds;
+            new Date().getTime() + paste_options.paste_expiry_at;
         paste_options.paste_id = nanoid(8);
         paste_options.last_modified_at = paste_options.paste_created_at;
 

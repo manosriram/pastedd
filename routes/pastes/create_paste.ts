@@ -14,7 +14,7 @@ import { encrypt_buffer } from "../../utils/";
 const router: express.Router = express.Router();
 
 router.post(
-    "/create_paste",
+    "/",
     validator,
     role_check_guest,
     can_paste,

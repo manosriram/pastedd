@@ -13,7 +13,8 @@ app.use(express.json());
 app.use(
     cookieSession({
         signed: false,
-        secure: false
+        secure: false,
+        httpOnly: false
     })
 );
 
@@ -42,15 +43,12 @@ app.use("/u/signin", signin_router);
 app.use("/u/signout", signout_router);
 app.use("/u/:user_name", getuser_router);
 
-app.use(
-    "/p/",
-    get_user_pastes,
-    get_paste_router,
-    get_raw_paste_router,
-    create_paste_router,
-    delete_paste_router,
-    update_paste_router
-);
+app.use("/p/:paste_id", delete_paste_router);
+app.use("/p/create_paste", create_paste_router);
+app.use("/p/raw/:paste_id/", get_raw_paste_router);
+app.use("/p/user/:user_name", get_user_pastes);
+app.use("/p/update_paste/:paste_id", update_paste_router);
+app.use("/p/:paste_id", get_paste_router);
 
 app.use(error_handler);
 

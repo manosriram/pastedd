@@ -2,10 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 const router: express.Router = express.Router();
 
 // @ -> /u/signout
-router.all("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         req.session = null;
-        console.log(req.session);
         return res
             .status(200)
             .json({ success: true, message: "Successfully Logged out" });
