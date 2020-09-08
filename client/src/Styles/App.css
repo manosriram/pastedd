@@ -76,3 +76,10 @@ input[type="text"] {
     padding-top: 10px;
     margin: auto;
 }
+
+#latest-pastes {
+    margin: 2%;
+    float: right;
+    width: 25%;
+    height: 90vh;
+}

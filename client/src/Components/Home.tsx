@@ -1,4 +1,4 @@
-import { Paste } from "./";
+import { Paste, NewPastes } from "./";
 import React, { useState, useEffect, useContext } from "react";
 import { Input, LinkTag, TextArea } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
@@ -139,6 +139,9 @@ const Home = (props: any) => {
                         Create Paste
                     </Button>
                 </form>
+            </div>
+            <div id="latest-pastes">
+                <NewPastes />
             </div>
         </>
     );

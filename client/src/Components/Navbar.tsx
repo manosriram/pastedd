@@ -25,11 +25,9 @@ function Navbar(props: any) {
             <Link to="/signup">Signup</Link>
             {is_user && (
                 <>
+                    <Link to="/profile/">Profile</Link>
                     <Link onClick={logout} to="/">
                         Logout
-                    </Link>
-                    <Link onClick={logout} to="/">
-                        Profile
                     </Link>
                 </>
             )}
