@@ -44,3 +44,20 @@ input[type="text"] {
 #hits {
     float: right;
 }
+#right {
+    float: right;
+    width: 30%;
+    margin: 2%;
+    padding: 1%;
+    width: 25%;
+    margin-left: 2%;
+    float: left;
+}
+
+#code {
+    height: 50vh;
+    overflow: scroll;
+}
+#select_form {
+    width: 20%;
+}

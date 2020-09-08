@@ -30,7 +30,7 @@ interface PasteDoc extends mongoose.Document {
 interface PasteModel extends mongoose.Model<PasteDoc> {
     build(attr: PasteAttrs): PasteDoc;
 }
-
+const now = new Date();
 const paste_schema = new mongoose.Schema(
     {
         // Todo: created_by -> User Model.
@@ -44,13 +44,14 @@ const paste_schema = new mongoose.Schema(
             default: "Untitled"
         },
         paste_created_at: {
-            type: Number,
-            default: new Date().getTime(),
+            type: Date,
+            default: Date.now(),
             immutable: true
         },
         paste_expiry_at: {
-            type: Number,
-            required: false,
+            type: Date,
+            default: now.setDate(now.getDate() + 30),
+            required: false
         },
         last_modified_at: {
             type: Number,

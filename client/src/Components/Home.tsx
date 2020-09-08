@@ -4,7 +4,7 @@ import { Input, LinkTag, TextArea } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
 import "../Styles/App.css";
 import { Button } from "@blueprintjs/core";
-const mseconds = 3600000;
+import Select from "react-select";
 
 interface PasteForm {
     paste_syntax: string;
@@ -18,12 +18,22 @@ const Home = (props: any) => {
     const [user, set_user] = useState<boolean>(is_user());
     const [paste_id, set_paste_id] = useState<string>("");
     const [paste_form, set_paste_form] = useState<PasteForm>({
-        paste_syntax: "Plaintext",
+        paste_syntax: "",
         paste_name: "",
         paste_content: "",
         paste_type: "",
-        paste_expiry_at: mseconds
+        paste_expiry_at: 3600000
     });
+
+    useEffect(() => {
+        set_paste_form({
+            paste_syntax: "Plaintext",
+            paste_name: "",
+            paste_content: "",
+            paste_type: "public",
+            paste_expiry_at: 3600000
+        });
+    }, []);
 
     const submit_paste_form = async (e: any) => {
         try {
@@ -45,6 +55,14 @@ const Home = (props: any) => {
         set_paste_form({ ...paste_form, [e.target.name]: e.target.value });
     };
 
+    const handle_select_form = async (e: any) => {
+        set_paste_form({
+            ...paste_form,
+            paste_syntax: e.value
+        });
+        console.log(paste_form);
+    };
+
     return (
         <>
             <div className="App">
@@ -58,22 +76,18 @@ const Home = (props: any) => {
                     <br />
                     <br />
 
-                    <label htmlFor="#languages">Syntax: </label>
-                    {"   "}
-                    <select
-                        id="languages"
-                        defaultValue="Plaintext"
+                    <Select
                         name="paste_syntax"
-                    >
-                        {languages_list.map(lang => {
-                            return <option value={lang}>{lang}</option>;
-                        })}
-                    </select>
-                    {"  "}
+                        id="select_form"
+                        onChange={handle_select_form}
+                        options={languages_list}
+                    />
+                    <br />
+                    <br />
                     <select
                         id="exposure"
-                        defaultValue="public"
                         name="paste_type"
+                        defaultValue="public"
                     >
                         <option value="public">Public</option>;
                         <option value="private" disabled={!user}>
@@ -98,8 +112,8 @@ const Home = (props: any) => {
                     {"   "}
                     <select
                         id="expiration"
-                        defaultValue="3600000"
                         name="paste_expiry_at"
+                        defaultValue="3600000"
                     >
                         <option value="3600000">1 Hour</option>;
                         <option value="21600000">6 Hours</option>;

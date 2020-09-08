@@ -10,7 +10,6 @@ router.get(
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;
-            console.log(paste_id);
             const paste = await new PasteService().get_paste(paste_id);
 
             if (!paste) {

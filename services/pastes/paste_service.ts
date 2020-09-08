@@ -3,17 +3,20 @@ import { nanoid } from "nanoid";
 import { decrypt_buffer } from "../../utils/decrypt_buffer";
 const mseconds = 86400000;
 
+const now = new Date();
 class PasteService {
     // Creates a Paste.
     async create_paste(paste_options: any) {
-        paste_options.paste_created_at = new Date().getTime();
-        paste_options.paste_expiry_at =
-            new Date().getTime() + paste_options.paste_expiry_at;
-        paste_options.paste_id = nanoid(8);
+        now.setMilliseconds(
+            now.getMilliseconds() + parseInt(paste_options.paste_expiry_at)
+        );
+        paste_options.paste_expiry_at = new Date(now);
+        paste_options.paste_id = nanoid(5);
         paste_options.last_modified_at = paste_options.paste_created_at;
 
         const new_paste = Paste.build(paste_options);
         await new_paste.save();
+        console.log(new_paste);
 
         return new_paste.paste_id;
     }
