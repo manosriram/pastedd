@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { get_paste } from "../utils/";
 import { useHistory, useParams } from "react-router-dom";
 import { TextArea } from "../Styled-Components";
-import { Icon, Tabs, Tab, Tag, Callout, Card } from "@blueprintjs/core";
+import { Button, Icon, Tabs, Tab, Tag, Callout, Card } from "@blueprintjs/core";
 import "../Styles/App.css";
 import moment from "moment";
 import hljs from "highlight.js";
@@ -34,7 +34,11 @@ function Paste(props: any) {
     if (paste === null) {
         return (
             <>
-                <h3>Paste Not found.</h3>
+                <Card className="card" interactive={true}>
+                    <h3>Paste not found.</h3>
+                    <br />
+                    <p>This paste may have expired or deleted by the user.</p>
+                </Card>
             </>
         );
     }

@@ -9,7 +9,7 @@ function Navbar(props: any) {
     const [is_user, set_is_user] = useState<boolean>(false);
     async function logout() {
         await fetch_url("/u/signout", "GET");
-        window.location.reload();
+        window.location.href = "/";
     }
 
     useEffect(() => {
@@ -24,9 +24,14 @@ function Navbar(props: any) {
             <Link to="/signin">Signin</Link>
             <Link to="/signup">Signup</Link>
             {is_user && (
-                <Link onClick={logout} to="/">
-                    Logout
-                </Link>
+                <>
+                    <Link onClick={logout} to="/">
+                        Logout
+                    </Link>
+                    <Link onClick={logout} to="/">
+                        Profile
+                    </Link>
+                </>
             )}
         </div>
     );

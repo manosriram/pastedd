@@ -1,9 +1,10 @@
 .nav {
-    background: beige;
+    background: lightblue;
     padding: 5px;
 }
 
 a {
+    color: black;
     margin: 5px;
     font-size: 20px;
 }

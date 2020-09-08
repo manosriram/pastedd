@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Input, LinkTag, TextArea } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
 import "../Styles/App.css";
-import { Button } from "@blueprintjs/core";
+import { Button, Toaster, Position } from "@blueprintjs/core";
 import Select from "react-select";
 
 interface PasteForm {
@@ -13,6 +13,11 @@ interface PasteForm {
     paste_expiry_at: number;
     paste_type: string;
 }
+
+const message_toast = Toaster.create({
+    className: "ex",
+    position: Position.TOP
+});
 
 const Home = (props: any) => {
     const [user, set_user] = useState<boolean>(is_user());
@@ -43,8 +48,14 @@ const Home = (props: any) => {
                 "POST",
                 paste_form
             );
+            console.log(response);
             if (response.success) {
                 props.history.push(`/p/${response.paste_id}`);
+            } else {
+                message_toast.show({
+                    intent: "danger",
+                    message: response.message
+                });
             }
         } catch (e) {
             console.log(e);
@@ -81,8 +92,7 @@ const Home = (props: any) => {
                         onChange={handle_select_form}
                         options={languages_list}
                     />
-                    <br />
-                    <br />
+                    <hr />
                     <label htmlFor="">Paste Type: </label> {"   "}
                     <select
                         id="exposure"

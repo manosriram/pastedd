@@ -3,6 +3,7 @@ import { Input, LinkTag } from "../Styled-Components/";
 import "../Styles/App.css";
 import { fetch_url } from "../utils/";
 import { Navbar } from "./";
+import Cookie from "js-cookie";
 
 import {
     Button,
@@ -49,11 +50,12 @@ function Signin() {
                 password
             });
             if (response.success) {
+                Cookie.set("user", user_name);
                 message_toast.show({
                     intent: "success",
                     message: response.message
                 });
-                window.location.reload();
+                window.location.href = "/";
             } else
                 message_toast.show({
                     intent: "danger",

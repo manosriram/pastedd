@@ -17,7 +17,7 @@ function create_auth_service() {
 
 class PasteAccessService {
     async per_day_check(user: any) {
-        console.log(user);
+        console.log("12312312");
         const now = new Date().getTime();
         if (user.per_day_session - now > 86400000) {
             const aa_date = new Date(user.per_day_session);
@@ -81,7 +81,7 @@ class PasteAccessService {
         try {
             const auth_service = create_auth_service();
             const current_user = await auth_service.current_user(req);
-            if (!current_user || !current_user.is_banned) return false;
+            if (!current_user || current_user.is_banned) return false;
             else {
                 req.current_user_name = current_user?.user_name;
                 // If the per-day-paste limit is satisfied, check the user's free paste limitations.
