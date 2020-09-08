@@ -76,6 +76,3 @@ CodeHighlight.propTypes = {
 // optionally set the language you think will use most as a default value
 // if you don't set this, I would encourage to make language prop required,
 // or at least improve the "else" statement in "componentDidMount"
-CodeHighlight.defaultProps = {
-    language: "Plaintext"
-};

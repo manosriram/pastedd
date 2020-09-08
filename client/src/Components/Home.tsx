@@ -60,7 +60,6 @@ const Home = (props: any) => {
             ...paste_form,
             paste_syntax: e.value
         });
-        console.log(paste_form);
     };
 
     return (
@@ -75,8 +74,8 @@ const Home = (props: any) => {
                     <TextArea name="paste_content" />
                     <br />
                     <br />
-
                     <Select
+                        placeholder="Language Syntax"
                         name="paste_syntax"
                         id="select_form"
                         onChange={handle_select_form}
@@ -84,6 +83,7 @@ const Home = (props: any) => {
                     />
                     <br />
                     <br />
+                    <label htmlFor="">Paste Type: </label> {"   "}
                     <select
                         id="exposure"
                         name="paste_type"
@@ -97,7 +97,6 @@ const Home = (props: any) => {
                     </select>
                     <br />
                     <br />
-
                     <label htmlFor="">Paste Name: </label>
                     {"   "}
                     <input

@@ -53,6 +53,7 @@ function Signin() {
                     intent: "success",
                     message: response.message
                 });
+                window.location.reload();
             } else
                 message_toast.show({
                     intent: "danger",

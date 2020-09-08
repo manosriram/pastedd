@@ -9,6 +9,7 @@ function Navbar(props: any) {
     const [is_user, set_is_user] = useState<boolean>(false);
     async function logout() {
         await fetch_url("/u/signout", "GET");
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -18,7 +19,7 @@ function Navbar(props: any) {
     return (
         <div className="nav">
             <Link to="/">
-                <Icon icon="add" />
+                <Icon icon="insert" iconSize={20} />
             </Link>
             <Link to="/signin">Signin</Link>
             <Link to="/signup">Signup</Link>

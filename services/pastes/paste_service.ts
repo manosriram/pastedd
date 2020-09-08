@@ -3,6 +3,10 @@ import { nanoid } from "nanoid";
 import { decrypt_buffer } from "../../utils/decrypt_buffer";
 const mseconds = 86400000;
 
+const has_expired = (exp: Date) => {
+    return new Date() > new Date(exp);
+};
+
 const now = new Date();
 class PasteService {
     // Creates a Paste.
@@ -23,7 +27,12 @@ class PasteService {
 
     // Returns a Paste on id.
     async get_paste(paste_id: string) {
-        return await Paste.findOne({ paste_id });
+        const paste = await Paste.findOne({ paste_id });
+        if (!paste || has_expired(paste.paste_expiry_at)) {
+            return null;
+        }
+
+        return paste;
     }
 
     // Deletes a paste by id.
