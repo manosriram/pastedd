@@ -48,7 +48,6 @@ const Home = (props: any) => {
                 "POST",
                 paste_form
             );
-            console.log(response);
             if (response.success) {
                 props.history.push(`/p/${response.paste_id}`);
             } else {

@@ -6,6 +6,7 @@ const router: express.Router = express.Router();
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { user_name } = req.params;
+        console.log(user_name);
 
         const auth_service = new AuthService();
         const user = await auth_service.get_user(user_name);

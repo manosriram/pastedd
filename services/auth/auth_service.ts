@@ -49,7 +49,9 @@ class AuthService {
     }
 
     async get_user(user_name: string) {
-        return await User.findOne({ user_name });
+        const user = await User.findOne({ user_name });
+        console.log(user);
+        return user;
     }
 
     async current_user(req: Request) {

@@ -1,7 +1,8 @@
 import { fetch_url } from "./";
 
-const get_user = async () => {
-    const response = await fetch_url("/u/current_user/", "GET");
+const get_user = async (username: string) => {
+    const url = `/u/${username}`;
+    const response = await fetch_url(url, "GET");
     return response;
 };
 
