@@ -9,12 +9,7 @@ function NewPastes() {
             {pastes.map(paste => {
                 return (
                     <>
-                        <Callout>
-                            <h5>
-                                <a href="#">{paste}</a>
-                            </h5>
-                            <p>Paste language here!</p>
-                        </Callout>
+                        <Card interactive={true}>{paste}</Card>
                         <br />
                     </>
                 );

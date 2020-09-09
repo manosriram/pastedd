@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Input, LinkTag } from "../Styled-Components/";
 import "../Styles/App.css";
 import { fetch_url } from "../utils/";
-import { Navbar } from "./";
 import Cookie from "js-cookie";
 
 import {

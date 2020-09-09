@@ -3,9 +3,18 @@ import { fetch_url } from "../utils/";
 import "../Styles/navbar.css";
 import { Link } from "react-router-dom";
 import Cookie from "js-cookie";
-import { Icon } from "@blueprintjs/core";
+import {
+    Icon,
+    NavbarGroup,
+    Navbar,
+    Alignment,
+    Button,
+    Popover,
+    Position,
+    Tooltip
+} from "@blueprintjs/core";
 
-function Navbar(props: any) {
+function Nav(props: any) {
     const [is_user, set_is_user] = useState<boolean>(false);
     async function logout() {
         await fetch_url("/u/signout", "GET");
@@ -18,21 +27,45 @@ function Navbar(props: any) {
 
     return (
         <div className="nav">
-            <Link to="/">
-                <Icon icon="insert" iconSize={20} />
-            </Link>
-            <Link to="/signin">Signin</Link>
-            <Link to="/signup">Signup</Link>
-            {is_user && (
-                <>
-                    <Link to="/profile/">Profile</Link>
-                    <Link onClick={logout} to="/">
-                        Logout
+            <Navbar>
+                <Navbar.Group align={Alignment.LEFT}>
+                    <Link to="/">
+                        <Navbar.Heading>
+                            <Popover
+                                content={<h1>Popover!</h1>}
+                                position={Position.RIGHT}
+                            >
+                                <Tooltip
+                                    content="New Paste"
+                                    position={Position.RIGHT}
+                                >
+                                    <Icon icon="insert" iconSize={20} />
+                                </Tooltip>
+                            </Popover>
+                        </Navbar.Heading>
                     </Link>
-                </>
-            )}
+                    <Navbar.Divider />
+                    <Link to="/signin">Signin</Link>
+                    <Icon icon="log-in" iconSize={20} />
+                    <Navbar.Divider />
+                    <Link to="/signup">Signup</Link>
+                    <Icon icon="person" iconSize={20} />
+                    <Navbar.Divider />
+                    {is_user && (
+                        <>
+                            <Link to="/profile/">Profile</Link>
+                            <Icon icon="id-number" iconSize={20} />
+                            <Navbar.Divider />
+                            <Link onClick={logout} to="/">
+                                Logout
+                            </Link>
+                            <Icon icon="log-out" iconSize={20} />
+                        </>
+                    )}
+                </Navbar.Group>
+            </Navbar>
         </div>
     );
 }
 
-export default Navbar;
+export default Nav;

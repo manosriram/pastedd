@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    Navbar,
+    Nav,
     Home,
     Test,
     Signup,
@@ -15,7 +15,7 @@ function App() {
     return (
         <>
             <Router>
-                <Navbar />
+                <Nav />
                 <Switch>
                     <Route exact path="/profile/" component={Profile} />
                     <Route exact path="/signup/" component={Signup} />
