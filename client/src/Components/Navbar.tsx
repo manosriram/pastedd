@@ -31,17 +31,12 @@ function Nav(props: any) {
                 <Navbar.Group align={Alignment.LEFT}>
                     <Link to="/">
                         <Navbar.Heading>
-                            <Popover
-                                content={<h1>Popover!</h1>}
+                            <Tooltip
+                                content="New Paste"
                                 position={Position.RIGHT}
                             >
-                                <Tooltip
-                                    content="New Paste"
-                                    position={Position.RIGHT}
-                                >
-                                    <Icon icon="insert" iconSize={20} />
-                                </Tooltip>
-                            </Popover>
+                                <Icon icon="insert" iconSize={20} />
+                            </Tooltip>
                         </Navbar.Heading>
                     </Link>
                     <Navbar.Divider />

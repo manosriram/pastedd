@@ -4,7 +4,7 @@ import { decrypt_buffer } from "../../utils/decrypt_buffer";
 const mseconds = 86400000;
 
 const has_expired = (exp: Date) => {
-    return new Date() > new Date(exp);
+    return new Date().getTime() > new Date(exp).getTime();
 };
 
 const now = new Date();

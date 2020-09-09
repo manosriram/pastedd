@@ -9,7 +9,10 @@ function NewPastes() {
             {pastes.map(paste => {
                 return (
                     <>
-                        <Card interactive={true}>{paste}</Card>
+                        <div className="bp3-callout .modifier">
+                            <h4 className="bp3-heading">Callout Heading</h4>
+                            It's dangerous to go alone! Take this.
+                        </div>
                         <br />
                     </>
                 );
