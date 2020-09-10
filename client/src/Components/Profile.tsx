@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { fetch_url, get_user } from "../utils";
-import { Card, Button, Elevation } from "@blueprintjs/core";
-import { useParams } from "react-router-dom";
-import { User } from "./";
 import "../Styles/Profile.css";
+import { Card } from "@blueprintjs/core";
+import { fetch_url } from "../utils/";
 
 function Profile(props: any) {
-    const [user, set_user] = useState<any>({});
-    const [username, set_name] = useState<string>("");
-    const { user_name } = useParams();
+    const [user, set_user] = useState<any>({
+        created_at: undefined,
+        email: undefined,
+        is_banned: undefined,
+        paste_count: {
+            public_pcount: undefined,
+            private_pcount: undefined,
+            unlisted_pcount: undefined,
+            pd_public_pcount: undefined,
+            pd_private_pcount: undefined,
+            pd_unlisted_pcount: undefined
+        },
+        per_day_session: undefined,
+        tier: undefined,
+        user_name: undefined
+    });
 
-    const show_user = async () => {
-        const current_user = await get_user(user_name);
-        console.log(current_user);
-    };
-
-    const current_user = async () => {
-        const user = await fetch_url("/u/current_user", "GET");
-        if (user) {
-            const user_name = user.user.user_name;
-            set_name(user_name);
-        }
+    const get_user = async () => {
+        const current_user = await fetch_url("/u/current_user", "GET");
+        set_user(current_user.user);
     };
 
     useEffect(() => {
-        if (user_name) {
-            show_user();
-        } else {
-            current_user();
-        }
+        get_user();
+        console.log(user);
     }, []);
 
     /*
@@ -41,53 +41,17 @@ function Profile(props: any) {
        /tbody
     */
 
-    if (username) {
-        return <User username={username} />;
-    } else {
-        return (
-            <>
-                <div id="pastes">
-                    <table
-                        id="paste-table"
-                        className="bp3-html-table .modifier"
-                    >
-                        <thead>
-                            <tr>
-                                <th>Paste</th>
-                                <th>Created</th>
-                                <th>Hits</th>
-                                <th>Expires</th>
-                                <th>Syntax</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Blueprint</td>
-                                <td>CSS framework and UI toolkit</td>
-                                <td>Sass, TypeScript, React</td>
-                                <td>Sass, TypeScript, React</td>
-                            </tr>
-                            <tr>
-                                <td>TSLint</td>
-                                <td>Static analysis linter for TypeScript</td>
-                                <td>TypeScript</td>
-                                <td>Sass, TypeScript, React</td>
-                            </tr>
-                            <tr>
-                                <td>Plottable</td>
-                                <td>
-                                    Composable charting library built on top of
-                                    D3
-                                </td>
-                                <td>SVG, TypeScript, D3</td>
-                                <td>Sass, TypeScript, React</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </>
-        );
-    }
+    return (
+        <>
+            <div id="user-info">Your Stats:</div>
+            <Card>
+                {user.user_name}
+                {user.created_at}
+                <br />
+                {user.paste_count.public_pcount}
+            </Card>
+        </>
+    );
 }
 
 export default Profile;

@@ -15,7 +15,10 @@ class AuthService {
         const user = await User.findOne({ user_name });
         if (!user) return { success: false, message: "User not found" };
 
-        const password_match = PasswordService.compare(user.password, password);
+        const password_match = await PasswordService.compare(
+            user.password,
+            password
+        );
         if (!password_match)
             return { message: "Incorrect Password", success: false };
         else {

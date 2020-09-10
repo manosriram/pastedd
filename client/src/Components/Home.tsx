@@ -139,9 +139,6 @@ const Home = (props: any) => {
                     </Button>
                 </form>
             </div>
-            <div id="latest-pastes">
-                <NewPastes />
-            </div>
         </>
     );
 };
