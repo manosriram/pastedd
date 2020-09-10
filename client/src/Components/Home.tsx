@@ -33,7 +33,7 @@ const Home = (props: any) => {
     useEffect(() => {
         set_paste_form({
             paste_syntax: "Plaintext",
-            paste_name: "",
+            paste_name: "Untitled",
             paste_content: "",
             paste_type: "public",
             paste_expiry_at: 3600000
@@ -62,6 +62,9 @@ const Home = (props: any) => {
     };
 
     const handle_paste_form = async (e: any) => {
+        if (e.target.name === "paste_expiry_at") {
+            e.target.value = parseInt(e.target.value);
+        }
         set_paste_form({ ...paste_form, [e.target.name]: e.target.value });
     };
 
@@ -112,7 +115,6 @@ const Home = (props: any) => {
                         type="text"
                         placeholder="Paste Name"
                         name="paste_name"
-                        required
                     />
                     <br />
                     <br />

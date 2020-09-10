@@ -2,9 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 
 const validator = [
-    check("paste_name")
-        .notEmpty()
-        .withMessage("Paste Name is required"),
     check("paste_content")
         .notEmpty()
         .withMessage("Paste Content is required"),

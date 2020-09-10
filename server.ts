@@ -46,7 +46,7 @@ app.use("/u/:user_name", getuser_router);
 app.use("/p/", delete_paste_router);
 app.use("/p/create_paste", create_paste_router);
 app.use("/p/raw/:paste_id/", get_raw_paste_router);
-app.use("/p/user/:user_name", get_user_pastes);
+app.use("/p/user/", get_user_pastes);
 app.use("/p/update_paste/:paste_id", update_paste_router);
 app.use("/p/", get_paste_router);
 

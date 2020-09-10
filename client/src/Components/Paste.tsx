@@ -14,6 +14,7 @@ function Paste(props: any) {
 
     const get_paste_on_start = async () => {
         const response = await get_paste(paste_id);
+        console.log(response);
         if (response.success) {
             set_paste(response.paste);
         } else set_paste(null);

@@ -1,4 +1,33 @@
-#user-info {
-    width: 50%;
+#stats {
+    width: 45%;
     margin: 5%;
+    float: left;
 }
+
+#see-pastes:hover {
+    cursor: pointer;
+    color: lightblue;
+}
+
+#paste_name {
+    color: blue;
+}
+
+#paste_name:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+#all-pastes {
+    float: right;
+    margin: 2%;
+}
+
+/* paste_expiry_at: "2020-09-05T06:40:58.216Z" */
+/* paste_hits: 0 */
+/* paste_id: "_4GbFgpt" */
+/* paste_name: "first paste" */
+/* paste_syntax: "C++" */
+/* paste_type: "public" */
+/* user: null */

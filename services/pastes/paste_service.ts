@@ -7,10 +7,10 @@ const has_expired = (exp: Date) => {
     return new Date().getTime() > new Date(exp).getTime();
 };
 
-const now = new Date();
 class PasteService {
     // Creates a Paste.
     async create_paste(paste_options: any) {
+        const now = new Date();
         now.setMilliseconds(
             now.getMilliseconds() + parseInt(paste_options.paste_expiry_at)
         );
