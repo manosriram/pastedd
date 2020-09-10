@@ -53,7 +53,6 @@ class AuthService {
 
     async get_user(user_name: string) {
         const user = await User.findOne({ user_name });
-        console.log(user);
         return user;
     }
 

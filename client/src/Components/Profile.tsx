@@ -28,7 +28,7 @@ function Profile(props: any) {
         const url = `/p/user/${username}`;
         const user_pastes = await fetch_url(url, "GET");
         console.log(user_pastes.pastes);
-        set_user_pastes(user_pastes.pastes.reverse());
+        set_user_pastes(user_pastes.pastes);
     };
 
     const get_user = async () => {

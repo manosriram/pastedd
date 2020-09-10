@@ -20,7 +20,6 @@ class PasteService {
 
         const new_paste = Paste.build(paste_options);
         await new_paste.save();
-        console.log(new_paste);
 
         return new_paste.paste_id;
     }
@@ -28,11 +27,14 @@ class PasteService {
     // Returns a Paste on id.
     async get_paste(paste_id: string) {
         const paste = await Paste.findOne({ paste_id });
-        if (!paste || has_expired(paste.paste_expiry_at)) {
+        if (!paste) {
             return null;
+        } else if (has_expired(paste.paste_expiry_at)) {
+            await Paste.deleteOne({ paste_id });
+            console.log("deleted");
+        } else {
+            return paste;
         }
-
-        return paste;
     }
 
     // Deletes a paste by id.
@@ -55,11 +57,18 @@ class PasteService {
     }
 
     async get_user_paste(user_name: string) {
-        const pastes = await Paste.find({ user: user_name });
-        pastes.map((paste, paste_index) => {
-            paste.paste_content = decrypt_buffer(
-                Buffer.from(paste.paste_content, "utf8")
-            );
+        const pastes = await Paste.find({ user: user_name }).sort({
+            paste_created_at: -1
+        });
+
+        pastes.map(async (paste, paste_index) => {
+            if (has_expired(paste.paste_expiry_at)) {
+                await Paste.deleteOne({ paste_id: paste.paste_id });
+            } else {
+                paste.paste_content = decrypt_buffer(
+                    Buffer.from(paste.paste_content, "utf8")
+                );
+            }
         });
         return pastes;
     }
