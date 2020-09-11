@@ -90,10 +90,13 @@ function Paste(props: any) {
                             copy
                         </Tag>
                         {"  "}
-                        <Tag id="tag-link">print</Tag>
+                        <Tag>print</Tag>
                     </Callout>
                     <br />
-                    <CodeHighlight language={paste.paste_syntax}>
+                    <CodeHighlight
+                        className="paste-content"
+                        language={paste.paste_syntax}
+                    >
                         {paste.paste_content}
                     </CodeHighlight>
                 </div>

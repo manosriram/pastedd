@@ -102,3 +102,18 @@ input[type="text"] {
     color: black;
     cursor: pointer;
 }
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .paste-content,
+    .paste-content * {
+        visibility: visible;
+    }
+    .paste-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
