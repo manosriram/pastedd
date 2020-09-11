@@ -21,7 +21,11 @@
 
 #all-pastes {
     float: right;
-    margin: 2%;
+    margin: 5%;
+    height: 75vh;
+    background: #ced9e0;
+    border-radius: 5px;
+    overflow-y: scroll;
 }
 
 /* paste_expiry_at: "2020-09-05T06:40:58.216Z" */

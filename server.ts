@@ -41,7 +41,7 @@ app.use("/u/current_user", current_user_router);
 app.use("/u/signup", signup_router);
 app.use("/u/signin", signin_router);
 app.use("/u/signout", signout_router);
-app.use("/u/:user_name", getuser_router);
+app.use("/u/", getuser_router);
 
 app.use("/p/", delete_paste_router);
 app.use("/p/create_paste", create_paste_router);

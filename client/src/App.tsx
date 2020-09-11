@@ -19,7 +19,7 @@ function App() {
                 <Nav />
                 <Switch>
                     <Route exact path="/profile" component={Profile} />
-                    <Route exact path="/u/:user_name/" component={Profile} />
+                    <Route exact path="/u/:user_name/" component={User} />
                     <Route exact path="/signup/" component={Signup} />
                     <Route exact path="/signin/" component={Signin} />
                     <Route exact path="/p/:paste_id/" component={Paste} />

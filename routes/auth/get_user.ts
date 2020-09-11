@@ -3,7 +3,7 @@ import { AuthService } from "../../services/auth/";
 const router: express.Router = express.Router();
 
 // @ -> /u/:user_name
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:user_name", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { user_name } = req.params;
         console.log(user_name);

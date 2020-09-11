@@ -39,12 +39,16 @@ function Nav(props: any) {
                             </Tooltip>
                         </Navbar.Heading>
                     </Link>
-                    <Navbar.Divider />
-                    <Link to="/signin">Signin</Link>
-                    <Icon icon="log-in" iconSize={20} />
-                    <Navbar.Divider />
-                    <Link to="/signup">Signup</Link>
-                    <Icon icon="person" iconSize={20} />
+                    {!is_user && (
+                        <>
+                            <Navbar.Divider />
+                            <Link to="/signin">Signin</Link>
+                            <Icon icon="log-in" iconSize={20} />
+                            <Navbar.Divider />
+                            <Link to="/signup">Signup</Link>
+                            <Icon icon="person" iconSize={20} />
+                        </>
+                    )}
                     <Navbar.Divider />
                     {is_user && (
                         <>

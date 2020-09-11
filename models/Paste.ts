@@ -50,7 +50,7 @@ const paste_schema = new mongoose.Schema(
         },
         paste_expiry_at: {
             type: Date,
-            default: now.setDate(now.getDate() + 30),
+            default: now.setHours(now.getHours() + 1),
             required: false
         },
         last_modified_at: {

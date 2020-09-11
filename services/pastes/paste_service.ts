@@ -31,7 +31,6 @@ class PasteService {
             return null;
         } else if (has_expired(paste.paste_expiry_at)) {
             await Paste.deleteOne({ paste_id });
-            console.log("deleted");
         } else {
             return paste;
         }
@@ -57,12 +56,16 @@ class PasteService {
     }
 
     async get_user_paste(user_name: string) {
-        const pastes = await Paste.find({ user: user_name }).sort({
+        const pastes = await Paste.find({
+            user: user_name,
+            $or: [{ paste_expiry_at: { $gte: new Date() } }]
+        }).sort({
             paste_created_at: -1
         });
 
         pastes.map(async (paste, paste_index) => {
             if (has_expired(paste.paste_expiry_at)) {
+                // decrement type: paste-count
                 await Paste.deleteOne({ paste_id: paste.paste_id });
             } else {
                 paste.paste_content = decrypt_buffer(
