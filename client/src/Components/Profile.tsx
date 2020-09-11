@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/Profile.css";
-import { Card, Callout, Icon } from "@blueprintjs/core";
+import { Spinner, Card, Callout, Icon } from "@blueprintjs/core";
 import { fetch_url } from "../utils/";
 import moment from "moment";
 import { useParams, useLocation } from "react-router-dom";
@@ -26,6 +26,7 @@ function Profile(props: any) {
     });
     const [diff, set_diff] = useState<number>(0);
     const [user_pastes, set_user_pastes] = useState<any>([]);
+    const [spin, set_spin] = useState<boolean>(false);
 
     const get_user_pastes = async (username: string) => {
         const user_pastes = await fetch_url("/u/current_user", "GET");
@@ -49,6 +50,7 @@ function Profile(props: any) {
     };
 
     useEffect(() => {
+        set_spin(true);
         const user_name = location.pathname.split("/")[2];
         set_un(user_name);
         const user_prof = async () => {
@@ -68,7 +70,8 @@ function Profile(props: any) {
        /tbody
     */
 
-    if (user === null) {
+    if (spin) return <Spinner />;
+    else if (user === null) {
         return (
             <>
                 <Card className="user-card" interactive={true}>

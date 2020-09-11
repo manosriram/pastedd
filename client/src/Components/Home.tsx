@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Input, LinkTag, TextArea } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
 import "../Styles/App.css";
-import { Button, Toaster, Position } from "@blueprintjs/core";
+import { Spinner, Button, Toaster, Position } from "@blueprintjs/core";
 import Select from "react-select";
 
 interface PasteForm {
@@ -29,8 +29,10 @@ const Home = (props: any) => {
         paste_type: "",
         paste_expiry_at: 3600000
     });
+    const [spin, set_spin] = useState<boolean>(false);
 
     useEffect(() => {
+        set_spin(true);
         set_paste_form({
             paste_syntax: "Plaintext",
             paste_name: "Untitled",
@@ -38,11 +40,13 @@ const Home = (props: any) => {
             paste_type: "public",
             paste_expiry_at: 3600000
         });
+        set_spin(false);
     }, []);
 
     const submit_paste_form = async (e: any) => {
         try {
             e.preventDefault();
+            set_spin(true);
             const response = await fetch_url(
                 "/p/create_paste",
                 "POST",
@@ -56,6 +60,7 @@ const Home = (props: any) => {
                     message: response.message
                 });
             }
+            set_spin(false);
         } catch (e) {
             console.log(e);
         }
@@ -74,6 +79,8 @@ const Home = (props: any) => {
             paste_syntax: e.value
         });
     };
+
+    if (spin) return <Spinner className="spin" intent="primary" />;
 
     return (
         <>

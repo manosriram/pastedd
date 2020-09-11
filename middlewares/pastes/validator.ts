@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 
 const validator = [
+    check("paste_name")
+        .isLength({ max: 32 })
+        .withMessage("Paste name must be lesser that 32 characters."),
     check("paste_content")
         .notEmpty()
         .withMessage("Paste Content is required"),

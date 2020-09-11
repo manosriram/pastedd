@@ -3,8 +3,8 @@ import { Input, LinkTag } from "../Styled-Components/";
 import "../Styles/App.css";
 import { fetch_url } from "../utils/";
 import Cookie from "js-cookie";
-
 import {
+    Spinner,
     Button,
     IToasterProps,
     IToastProps,
@@ -28,6 +28,7 @@ function Signin() {
         password: ""
     });
     const [is_signed_in, set_signed_in] = useState<boolean>(false);
+    const [spin, set_spin] = useState<boolean>(false);
 
     const handle_signin = (e: any) => {
         set_user_det({ ...user_det, [e.target.name]: e.target.value });
@@ -36,12 +37,14 @@ function Signin() {
     const submit_form = async (e: any) => {
         try {
             e.preventDefault();
+            set_spin(true);
             const { user_name, password } = user_det;
             if (!user_name || !password) {
                 message_toast.show({
                     intent: "danger",
                     message: "Please fill all the fields."
                 });
+                set_spin(false);
                 return;
             }
             const response = await fetch_url("/u/signin", "POST", {
@@ -60,10 +63,14 @@ function Signin() {
                     intent: "danger",
                     message: response.message
                 });
+
+            set_spin(false);
         } catch (e) {
             console.log(e);
         }
     };
+
+    if (spin) return <Spinner className="spin" intent="primary" />;
 
     return (
         <>

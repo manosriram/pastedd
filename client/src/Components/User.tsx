@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/Profile.css";
-import { Card, Callout, Icon } from "@blueprintjs/core";
+import { Spinner, Card, Callout, Icon } from "@blueprintjs/core";
 import { fetch_url } from "../utils/";
 import moment from "moment";
 import { useParams, useLocation } from "react-router-dom";
@@ -25,6 +25,7 @@ function User(props: any) {
         tier: undefined,
         user_name: undefined
     });
+    const [spin, set_spin] = useState<boolean>(false);
 
     const get_user_pastes = async (name: string) => {
         const url = `/p/user/${name}`;
@@ -49,15 +50,18 @@ function User(props: any) {
     };
 
     useEffect(() => {
+        set_spin(true);
         const user_prof = async () => {
             const name = location.pathname.split("/")[2];
             await get_user(name);
             get_user_pastes(name);
+            set_spin(false);
         };
         user_prof();
     }, []);
 
-    if (user === null) {
+    if (spin) return <Spinner className="spin" intent="primary" />;
+    else if (user === null) {
         return (
             <>
                 <Card className="user-card" interactive={true}>
@@ -87,67 +91,97 @@ function User(props: any) {
                         )}
                     </Callout>
                     <br />
-                    <p>Public Pastes: {user.paste_count.public_pcount}</p>
-                    <p>Private Pastes: {user.paste_count.private_pcount}</p>
-                    <p>Unlisted Pastes: {user.paste_count.unlisted_pcount}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Tier: {user.tier}</p>
+                    <p>
+                        Public Pastes:{" "}
+                        <strong>{user.paste_count.public_pcount}</strong>
+                    </p>
+                    <p>
+                        Private Pastes:{" "}
+                        <strong>{user.paste_count.private_pcount}</strong>
+                    </p>
+                    <p>
+                        Unlisted Pastes:{" "}
+                        <strong>{user.paste_count.unlisted_pcount}</strong>
+                    </p>
+                    <p>
+                        Email:<strong> {user.email}</strong>
+                    </p>
+                    <p>
+                        Tier: <strong>{user.tier}</strong>
+                    </p>
                     <hr />
 
                     <p>
                         Private Pastes Remaining today:{" "}
-                        {10 - user.paste_count.pd_private_pcount}
+                        <strong>
+                            {10 - user.paste_count.pd_private_pcount}
+                        </strong>
                     </p>
                     <p>
                         Unlisted Pastes Remaining today:{" "}
-                        {20 - user.paste_count.pd_unlisted_pcount}
+                        <strong>
+                            {20 - user.paste_count.pd_unlisted_pcount}
+                        </strong>
                     </p>
                     <br />
                 </Card>
             </div>
-            <div id="all-pastes">
-                <table className="bp3-html-table .modifier">
-                    <thead>
-                        <tr>
-                            <th>Paste Name</th>
-                            <th>Created</th>
-                            <th>Syntax</th>
-                            <th>Expires</th>
-                            <th>Hits</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {user_pastes.map((paste: any) => {
-                            return (
-                                <>
-                                    <tr>
-                                        <td
-                                            id="paste_name"
-                                            onClick={() =>
-                                                props.history.push(
-                                                    `/p/${paste.paste_id}`
-                                                )
-                                            }
-                                        >
-                                            {paste.paste_name}
-                                        </td>
-                                        <td>
-                                            {moment().to(
-                                                paste.paste_created_at
-                                            )}
-                                        </td>
-                                        <td>{paste.paste_syntax}</td>
-                                        <td>
-                                            {moment().to(paste.paste_expiry_at)}
-                                        </td>
-                                        <td>{paste.paste_hits}</td>
-                                    </tr>
-                                </>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
+            {!user_pastes.length ? (
+                <Card interactive={true} id="no-paste">
+                    No live pastes.
+                </Card>
+            ) : (
+                <div id="all-pastes">
+                    <table className="bp3-html-table .modifier">
+                        <thead>
+                            <tr>
+                                <th>Paste Name</th>
+                                <th>Created</th>
+                                <th>Syntax</th>
+                                <th>Expires</th>
+                                <th>Hits</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paste-table">
+                            {user_pastes.map((paste: any) => {
+                                return (
+                                    <>
+                                        <tr>
+                                            <td
+                                                id="paste_name"
+                                                onClick={() =>
+                                                    props.history.push(
+                                                        `/p/${paste.paste_id}`
+                                                    )
+                                                }
+                                            >
+                                                {paste.paste_name.length > 15
+                                                    ? paste.paste_name.substr(
+                                                          0,
+                                                          10
+                                                      ) + "..."
+                                                    : paste.paste_name}
+                                            </td>
+                                            <td>
+                                                {moment().to(
+                                                    paste.paste_created_at
+                                                )}
+                                            </td>
+                                            <td>{paste.paste_syntax}</td>
+                                            <td>
+                                                {moment().to(
+                                                    paste.paste_expiry_at
+                                                )}
+                                            </td>
+                                            <td>{paste.paste_hits}</td>
+                                        </tr>
+                                    </>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </>
     );
 }

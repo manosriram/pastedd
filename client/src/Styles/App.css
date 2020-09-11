@@ -97,3 +97,8 @@ input[type="text"] {
     width: 25%;
     height: 90vh;
 }
+
+#tag-link:hover {
+    color: black;
+    cursor: pointer;
+}

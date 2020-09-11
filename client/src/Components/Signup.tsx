@@ -4,6 +4,7 @@ import "../Styles/App.css";
 import { fetch_url } from "../utils/";
 
 import {
+    Spinner,
     Button,
     IToasterProps,
     IToastProps,
@@ -27,7 +28,7 @@ function Signup() {
         user_name: "",
         password: ""
     });
-    const [is_signed_up, set_signed_up] = useState<boolean>(false);
+    const [spin, set_spin] = useState<boolean>(false);
 
     const handle_signup = (e: any) => {
         set_user_det({ ...user_det, [e.target.name]: e.target.value });
@@ -36,12 +37,14 @@ function Signup() {
     const submit_form = async (e: any) => {
         try {
             e.preventDefault();
+            set_spin(true);
             const { email, user_name, password } = user_det;
             if (!email || !user_name || !password) {
                 message_toast.show({
                     intent: "danger",
                     message: "Please fill all the fields."
                 });
+                set_spin(false);
                 return;
             }
             const response = await fetch_url("/u/signup", "POST", {
@@ -49,7 +52,6 @@ function Signup() {
                 user_name,
                 password
             });
-            console.log(response);
             if (response.success)
                 message_toast.show({
                     intent: "success",
@@ -60,10 +62,14 @@ function Signup() {
                     intent: "danger",
                     message: response.message
                 });
+
+            set_spin(false);
         } catch (e) {
             console.log(e);
         }
     };
+
+    if (spin) return <Spinner intent="primary" className="spin" />;
 
     return (
         <>
