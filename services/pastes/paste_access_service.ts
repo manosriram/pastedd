@@ -17,25 +17,30 @@ function create_auth_service() {
 
 class PasteAccessService {
     async per_day_check(user: any) {
-        console.log("12312312");
         const now = new Date().getTime();
-        if (user.per_day_session - now > 86400000) {
-            const aa_date = new Date(user.per_day_session);
-            aa_date.setDate(new Date().getDate());
-            user.per_day_session = aa_date.getTime();
+        const renew = new Date(user.next_renew).getTime();
+        console.log(user);
+
+        // New day, reset variables and grant permission (return true).
+        if (now - renew > 0) {
+            const updated_renew = new Date(user.next_renew);
+            updated_renew.setDate(new Date(updated_renew).getDate() + 1);
+            user.next_renew = updated_renew.getTime();
 
             user.paste_count!.pd_public_pcount = 0;
             user.paste_count!.pd_private_pcount = 0;
             user.paste_count!.pd_unlisted_pcount = 0;
 
             await user.save();
-            return false;
+            return true;
         } else {
+            // Check for constraints.
             const {
                 pd_public_pcount,
                 pd_private_pcount,
                 pd_unlisted_pcount
             } = user.paste_count;
+            console.log("IN");
             if (
                 pd_public_pcount + pd_unlisted_pcount + pd_private_pcount >=
                 Limits_FREE.PER_DAY_LIMIT

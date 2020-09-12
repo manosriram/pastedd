@@ -1,7 +1,6 @@
 import { Paste } from "../../models/Paste";
 import { nanoid } from "nanoid";
 import { decrypt_buffer } from "../../utils/decrypt_buffer";
-const mseconds = 86400000;
 
 const has_expired = (exp: Date) => {
     return new Date().getTime() > new Date(exp).getTime();
