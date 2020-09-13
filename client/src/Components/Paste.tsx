@@ -74,14 +74,16 @@ function Paste(props: any) {
     };
 
     const clone_paste = async () => {
-        await fetch_url("/p/create_paste/", "POST", {
+        const response = await fetch_url("/p/create_paste/", "POST", {
             paste_syntax: paste.paste_syntax,
             paste_name: paste.paste_name,
             paste_content: paste.paste_content,
             paste_type: paste.paste_type,
-            paste_expiry_at: paste.paste_expiry_at
+            paste_expiry_at: paste.paste_expiry_at,
+            clone: true
         });
-        props.history.push(`/u/${user.user_name}`);
+        console.log(response);
+        // props.history.push(`/u/${user.user_name}`);
     };
 
     useEffect(() => {

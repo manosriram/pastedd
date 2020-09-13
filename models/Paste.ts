@@ -31,6 +31,7 @@ interface PasteModel extends mongoose.Model<PasteDoc> {
     build(attr: PasteAttrs): PasteDoc;
 }
 const now = new Date();
+const tom = new Date(now).setHours(now.getHours() + 1);
 const paste_schema = new mongoose.Schema(
     {
         // Todo: created_by -> User Model.
@@ -50,7 +51,7 @@ const paste_schema = new mongoose.Schema(
         },
         paste_expiry_at: {
             type: Date,
-            default: now.setHours(now.getHours() + 1),
+            default: tom,
             required: false
         },
         last_modified_at: {
@@ -81,6 +82,20 @@ const paste_schema = new mongoose.Schema(
             type: String,
             required: false,
             default: null
+        },
+        expiry_option: {
+            type: Number,
+            enum: [
+                3600000,
+                21600000,
+                43200000,
+                86400000,
+                604800000,
+                2678400000,
+                16070400000,
+                31536000000
+            ],
+            default: 3600000
         }
     },
     {

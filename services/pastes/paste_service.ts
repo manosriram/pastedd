@@ -3,18 +3,21 @@ import { nanoid } from "nanoid";
 import { encrypt_buffer, decrypt_buffer } from "../../utils/";
 
 const has_expired = (exp: Date) => {
-    return new Date().getTime() > new Date(exp).getTime();
+    return new Date().getTime() >= new Date(exp).getTime();
 };
 
 class PasteService {
     // Creates a Paste.
     async create_paste(paste_options: any) {
         let now = new Date().getTime();
+
+        console.log(paste_options.paste_expiry_at);
         now += parseInt(paste_options.paste_expiry_at);
 
         paste_options.paste_expiry_at = new Date(now);
         paste_options.paste_id = nanoid(5);
         paste_options.last_modified_at = paste_options.paste_created_at;
+        console.log(paste_options.paste_expiry_at);
 
         const new_paste = Paste.build(paste_options);
         await new_paste.save();
