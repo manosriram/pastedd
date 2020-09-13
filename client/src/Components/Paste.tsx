@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { get_paste } from "../utils/";
+import { get_paste, fetch_url } from "../utils/";
 import { useHistory, useParams } from "react-router-dom";
 import { TextArea } from "../Styled-Components";
 import {
@@ -18,6 +18,7 @@ import "../Styles/App.css";
 import moment from "moment";
 import hljs from "highlight.js";
 import { CodeHighlight } from "./CodeHighlighter.js";
+import { Home } from "./";
 
 const message_toast = Toaster.create({
     className: "ex",
@@ -27,10 +28,19 @@ const message_toast = Toaster.create({
 function Paste(props: any) {
     const { paste_id } = useParams();
     const [paste, set_paste] = useState<any>({});
+    const [rct, set_redirect] = useState<boolean>(false);
     const [spin, set_spin] = useState<boolean>(false);
+    const [edit, set_edit] = useState<boolean>(false);
+    const [user, set_user] = useState<any>(false);
+
+    const get_current_user = async () => {
+        const user = await fetch_url("/u/current_user", "GET");
+        set_user(user.user);
+    };
 
     const get_paste_on_start = async () => {
         const response = await get_paste(paste_id);
+        console.log(response);
         if (response.success) {
             set_paste(response.paste);
         } else set_paste(null);
@@ -44,8 +54,39 @@ function Paste(props: any) {
         set_spin(false);
     };
 
+    const delete_pst = async () => {
+        const response = await fetch_url(`/p/${paste.paste_id}`, "DELETE");
+        if (response.success) props.history.push(`/u/${user.user_name}`);
+        else
+            message_toast.show({
+                intent: "danger",
+                message: response.message
+            });
+    };
+
+    const delete_paste = (e: any) => {
+        if (window.confirm("Are you sure you want to delete this paste?"))
+            delete_pst();
+    };
+
+    const edit_paste = (e: any) => {
+        props.history.push(`/edit/${paste.paste_id}`);
+    };
+
+    const clone_paste = async () => {
+        await fetch_url("/p/create_paste/", "POST", {
+            paste_syntax: paste.paste_syntax,
+            paste_name: paste.paste_name,
+            paste_content: paste.paste_content,
+            paste_type: paste.paste_type,
+            paste_expiry_at: paste.paste_expiry_at
+        });
+        props.history.push(`/u/${user.user_name}`);
+    };
+
     useEffect(() => {
         set_spin(true);
+        get_current_user();
         get_paste_on_start();
         update_code_syntax_highlighting();
     }, []);
@@ -90,7 +131,27 @@ function Paste(props: any) {
                             copy
                         </Tag>
                         {"  "}
-                        <Tag>print</Tag>
+                        <Tag id="tag-link">print</Tag>
+                        {user && user.user_name === paste.user && (
+                            <>
+                                {"  "}
+                                <Tag id="tag-link" onClick={edit_paste}>
+                                    edit
+                                </Tag>
+                                {"  "}
+                                <Tag id="tag-link" onClick={delete_paste}>
+                                    delete
+                                </Tag>
+                            </>
+                        )}
+                        {user && (
+                            <>
+                                {"  "}
+                                <Tag id="tag-link" onClick={clone_paste}>
+                                    clone
+                                </Tag>
+                            </>
+                        )}
                     </Callout>
                     <br />
                     <CodeHighlight

@@ -13,12 +13,12 @@ router.get(
             const paste = await new PasteService().get_paste(paste_id);
 
             if (!paste) {
-                res.statusCode = 404;
                 return next(new Error("Paste not found"));
             }
 
             paste!.paste_hits += 1;
             await paste!.save();
+            console.log(paste);
             const decrypted_buffer = decrypt_buffer(
                 Buffer.from(paste!.paste_content)
             );

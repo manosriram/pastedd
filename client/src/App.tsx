@@ -7,7 +7,8 @@ import {
     Signin,
     Paste,
     Profile,
-    User
+    User,
+    Edit
 } from "./Components/";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./Styles/App.css";
@@ -20,6 +21,7 @@ function App() {
                 <Switch>
                     <Route exact path="/profile" component={Profile} />
                     <Route exact path="/u/:user_name/" component={User} />
+                    <Route exact path="/edit/:paste_id/" component={Edit} />
                     <Route exact path="/signup/" component={Signup} />
                     <Route exact path="/signin/" component={Signin} />
                     <Route exact path="/p/:paste_id/" component={Paste} />
