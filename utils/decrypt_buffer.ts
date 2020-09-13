@@ -6,6 +6,5 @@ export function decrypt_buffer(buffer: Buffer) {
 
     decoded = decipher.update(buffer.toString(), "binary", "utf8");
     decoded += decipher.final("utf8");
-    console.log(decoded);
     return decoded;
 }

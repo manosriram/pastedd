@@ -7,3 +7,5 @@ export { default as Paste } from "./Paste";
 export { default as Profile } from "./Profile";
 export { default as NewPastes } from "./NewPastes";
 export { default as User } from "./User";
+export { default as Edit } from "./Edit";
+export { default as Box } from "./Box";

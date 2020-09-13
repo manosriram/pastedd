@@ -4,11 +4,11 @@ import { Input, LinkTag } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
 import "../Styles/App.css";
 import {
+    TextArea,
     Spinner,
     Button,
     Toaster,
-    Position,
-    TextArea
+    Position
 } from "@blueprintjs/core";
 import Select from "react-select";
 import { withRouter } from "react-router-dom";

@@ -119,16 +119,14 @@ function User(props: any) {
                     <hr />
 
                     <p>
-                        Private Pastes Remaining today:{" "}
+                        Pastes Remaining today:{" "}
                         <strong>
-                            {10 - user.paste_count.pd_private_pcount}
+                            {40 -
+                                (user.paste_count.pd_private_pcount +
+                                    user.paste_count.pd_public_pcount +
+                                    user.paste_count.pd_unlisted_pcount)}
                         </strong>
-                    </p>
-                    <p>
-                        Unlisted Pastes Remaining today:{" "}
-                        <strong>
-                            {20 - user.paste_count.pd_unlisted_pcount}
-                        </strong>
+                        {"  "} (Renews {moment(user.next_renew).calendar()})
                     </p>
                     <p>Private and Unlisted pastes are only visible to you.</p>
                     <br />

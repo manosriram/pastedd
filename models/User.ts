@@ -90,7 +90,7 @@ const user_schema = new mongoose.Schema(
                 default: 0
             }
         },
-        per_day_session: {
+        next_renew: {
             type: Number,
             default: tom
         }

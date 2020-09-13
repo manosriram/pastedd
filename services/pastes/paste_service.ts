@@ -1,7 +1,6 @@
 import { Paste } from "../../models/Paste";
 import { nanoid } from "nanoid";
-import { decrypt_buffer } from "../../utils/decrypt_buffer";
-const mseconds = 86400000;
+import { encrypt_buffer, decrypt_buffer } from "../../utils/";
 
 const has_expired = (exp: Date) => {
     return new Date().getTime() > new Date(exp).getTime();
@@ -10,10 +9,9 @@ const has_expired = (exp: Date) => {
 class PasteService {
     // Creates a Paste.
     async create_paste(paste_options: any) {
-        const now = new Date();
-        now.setMilliseconds(
-            now.getMilliseconds() + parseInt(paste_options.paste_expiry_at)
-        );
+        let now = new Date().getTime();
+        now += parseInt(paste_options.paste_expiry_at);
+
         paste_options.paste_expiry_at = new Date(now);
         paste_options.paste_id = nanoid(5);
         paste_options.last_modified_at = paste_options.paste_created_at;
@@ -39,13 +37,13 @@ class PasteService {
     // Deletes a paste by id.
     async delete_paste(paste_id: string) {
         return await Paste.findOneAndDelete({
-            paste_id,
-            useFindAndModify: true
+            paste_id: paste_id
         });
     }
 
     // Updates a paste by id.
     async update_paste(paste_id: string, options: any) {
+        options.paste_content = encrypt_buffer(options.paste_content);
         const paste = await Paste.findOneAndUpdate(
             { paste_id },
             { $set: options, last_modified_at: new Date().getTime() },
