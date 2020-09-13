@@ -1,6 +1,7 @@
 import { Request } from "express";
 import { AuthService } from "../auth/";
 import { TYPE_PASTE, UserPayload, Limits_FREE } from "../../types";
+import { Paste } from "../../models/Paste";
 
 declare global {
     namespace Express {
@@ -97,6 +98,25 @@ class PasteAccessService {
             console.log(e);
             throw new Error(e);
         }
+    }
+
+    async can_edit(req: Request, paste_id: string) {
+        const paste = await Paste.findOne({ paste_id });
+        const auth_service = create_auth_service();
+        const current_user = await auth_service.current_user(req);
+
+        if (!current_user || current_user.is_banned)
+            return { success: false, message: "Signin to edit your paste(s)" };
+        if (!paste) return { success: false, message: "Paste not found" };
+
+        if (paste.user === current_user.user_name) return { success: true };
+        else
+            return {
+                success: false,
+                message:
+                    "This paste doesn't belong to your account. You can clone\
+                    this paste and then edit."
+            };
     }
 }
 

@@ -8,6 +8,7 @@ import { useParams, useLocation } from "react-router-dom";
 function User(props: any) {
     const location = useLocation();
     const [diff, set_diff] = useState<number>(0);
+    const [cu, set_cu] = useState<any>({});
     const [user_pastes, set_user_pastes] = useState<any>([]);
     const [user, set_user] = useState<any>({
         created_at: undefined,
@@ -33,6 +34,11 @@ function User(props: any) {
         set_user_pastes(user_pastes.pastes);
     };
 
+    const current_user = async () => {
+        const cu = await fetch_url("/u/current_user", "GET");
+        if (cu.user) set_cu(cu.user);
+    };
+
     const get_user = async (name: string) => {
         try {
             const url = `/u/${name}`;
@@ -55,6 +61,7 @@ function User(props: any) {
             const name = location.pathname.split("/")[2];
             await get_user(name);
             get_user_pastes(name);
+            current_user();
             set_spin(false);
         };
         user_prof();
@@ -123,6 +130,7 @@ function User(props: any) {
                             {20 - user.paste_count.pd_unlisted_pcount}
                         </strong>
                     </p>
+                    <p>Private and Unlisted pastes are only visible to you.</p>
                     <br />
                 </Card>
             </div>
@@ -144,39 +152,48 @@ function User(props: any) {
                         </thead>
                         <tbody id="paste-table">
                             {user_pastes.map((paste: any) => {
-                                return (
-                                    <>
-                                        <tr>
-                                            <td
-                                                id="paste_name"
-                                                onClick={() =>
-                                                    props.history.push(
-                                                        `/p/${paste.paste_id}`
-                                                    )
-                                                }
-                                            >
-                                                {paste.paste_name.length > 15
-                                                    ? paste.paste_name.substr(
-                                                          0,
-                                                          10
-                                                      ) + "..."
-                                                    : paste.paste_name}
-                                            </td>
-                                            <td>
-                                                {moment().to(
-                                                    paste.paste_created_at
-                                                )}
-                                            </td>
-                                            <td>{paste.paste_syntax}</td>
-                                            <td>
-                                                {moment().to(
-                                                    paste.paste_expiry_at
-                                                )}
-                                            </td>
-                                            <td>{paste.paste_hits}</td>
-                                        </tr>
-                                    </>
-                                );
+                                if (
+                                    cu.user_name !== paste.user &&
+                                    (paste.paste_type === "private" ||
+                                        paste.paste_type === "unlisted")
+                                )
+                                    return <></>;
+                                else {
+                                    return (
+                                        <>
+                                            <tr>
+                                                <td
+                                                    id="paste_name"
+                                                    onClick={() =>
+                                                        props.history.push(
+                                                            `/p/${paste.paste_id}`
+                                                        )
+                                                    }
+                                                >
+                                                    {paste.paste_name.length >
+                                                    15
+                                                        ? paste.paste_name.substr(
+                                                              0,
+                                                              10
+                                                          ) + "..."
+                                                        : paste.paste_name}
+                                                </td>
+                                                <td>
+                                                    {moment().to(
+                                                        paste.paste_created_at
+                                                    )}
+                                                </td>
+                                                <td>{paste.paste_syntax}</td>
+                                                <td>
+                                                    {moment().to(
+                                                        paste.paste_expiry_at
+                                                    )}
+                                                </td>
+                                                <td>{paste.paste_hits}</td>
+                                            </tr>
+                                        </>
+                                    );
+                                }
                             })}
                         </tbody>
                     </table>

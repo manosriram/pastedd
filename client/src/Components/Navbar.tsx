@@ -18,7 +18,7 @@ function Nav(props: any) {
     const [is_user, set_is_user] = useState<boolean>(false);
     async function logout() {
         await fetch_url("/u/signout", "GET");
-        window.location.href = "/";
+        window.location.href = "/signin";
     }
 
     useEffect(() => {
