@@ -1,0 +1,133 @@
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .App,
+    select,
+    #select_form {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #00000;
+        top: 0;
+        left: 0;
+    }
+
+    input[type="password"],
+    input[type="email"],
+    input[type="text"] {
+        width: 100%;
+    }
+
+    #related-links {
+        display: none;
+    }
+
+    .signup-container {
+        margin: auto;
+        width: 100%;
+    }
+
+    .signup-container input,
+    .signup-container button {
+        margin: 5px 5px 5px 0;
+    }
+
+    .signup-container h3 {
+        text-align: center;
+    }
+
+    .signup-container button {
+        width: 50%;
+        height: 5vh;
+        font-size: 2vh;
+        margin-left: 25%;
+    }
+
+    #stats {
+        min-width: 90%;
+        float: none;
+    }
+
+    #ex,
+    #ht,
+    #cr,
+    #sy {
+        display: none;
+    }
+
+    .lock {
+        color: black;
+    }
+
+    #all-pastes {
+        width: 100%;
+        background: #b3cfff;
+        float: left;
+        border-radius: 5px;
+    }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width: 321px) {
+    /* STYLES GO HERE */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width: 320px) {
+    /* STYLES GO HERE */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .App,
+    select,
+    #select_form {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #00000;
+        top: 0;
+        left: 0;
+    }
+    #stats {
+        min-width: 90%;
+        float: none;
+    }
+    #all-pastes {
+        margin: 5%;
+    }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    /* STYLES GO HERE */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    /* STYLES GO HERE */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 1224px) {
+    /* STYLES GO HERE */
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width: 1824px) {
+    /* STYLES GO HERE */
+}
+
+/* iPhone 5 (portrait &amp; landscape)----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+    /* STYLES GO HERE */
+}
+
+/* iPhone 5 (landscape)----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
+    /* STYLES GO HERE */
+}
+
+/* iPhone 5 (portrait)----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
+    /* STYLES GO HERE */
+}

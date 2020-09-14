@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, LinkTag } from "../Styled-Components/";
 import "../Styles/App.css";
+import "../Styles/Responsive.css";
 import { fetch_url } from "../utils/";
 import Cookie from "js-cookie";
 import {
@@ -91,7 +92,6 @@ function Signin() {
                         required
                     />
                     <br />
-
                     <Button
                         type="submit"
                         onClick={submit_form}

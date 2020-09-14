@@ -111,11 +111,10 @@ function Paste(props: any) {
     else if (paste === null) {
         return (
             <>
-                <Card className="card" interactive={true}>
-                    <h3>Paste not found.</h3>
+                <Callout className="card">
+                    <h3>{message}</h3>
                     <br />
-                    <p>{message}</p>
-                </Card>
+                </Callout>
             </>
         );
     } else {

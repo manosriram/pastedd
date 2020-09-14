@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/Profile.css";
+import "../Styles/Responsive.css";
 import { Spinner, Card, Callout, Icon } from "@blueprintjs/core";
 import { fetch_url } from "../utils/";
 import moment from "moment";
@@ -117,7 +118,6 @@ function User(props: any) {
                         Tier: <strong>{user.tier}</strong>
                     </p>
                     <hr />
-
                     <p>
                         Pastes Remaining today:{" "}
                         <strong>
@@ -141,11 +141,11 @@ function User(props: any) {
                     <table className="bp3-html-table .modifier">
                         <thead>
                             <tr>
-                                <th>Paste Name</th>
-                                <th>Created</th>
-                                <th>Syntax</th>
-                                <th>Expires</th>
-                                <th>Hits</th>
+                                <th id="pn">Paste Name</th>
+                                <th id="cr">Created</th>
+                                <th id="sy">Syntax</th>
+                                <th id="ex">Expires</th>
+                                <th id="ht">Hits</th>
                             </tr>
                         </thead>
                         <tbody id="paste-table">
@@ -162,32 +162,45 @@ function User(props: any) {
                                             <tr>
                                                 <td
                                                     id="paste_name"
+                                                    className="pn"
                                                     onClick={() =>
                                                         props.history.push(
                                                             `/p/${paste.paste_id}`
                                                         )
                                                     }
                                                 >
+                                                    {paste.paste_type ===
+                                                        "private" && (
+                                                        <Icon
+                                                            className="lock"
+                                                            icon="lock"
+                                                        />
+                                                    )}
+                                                    {"  "}
                                                     {paste.paste_name.length >
                                                     15
                                                         ? paste.paste_name.substr(
                                                               0,
-                                                              10
+                                                              5
                                                           ) + "..."
                                                         : paste.paste_name}
                                                 </td>
-                                                <td>
+                                                <td id="cr">
                                                     {moment().to(
                                                         paste.paste_created_at
                                                     )}
                                                 </td>
-                                                <td>{paste.paste_syntax}</td>
-                                                <td>
+                                                <td id="sy">
+                                                    {paste.paste_syntax}
+                                                </td>
+                                                <td id="ex">
                                                     {moment().to(
                                                         paste.paste_expiry_at
                                                     )}
                                                 </td>
-                                                <td>{paste.paste_hits}</td>
+                                                <td id="ht">
+                                                    {paste.paste_hits}
+                                                </td>
                                             </tr>
                                         </>
                                     );

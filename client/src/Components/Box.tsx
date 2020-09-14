@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Input, LinkTag } from "../Styled-Components";
 import { fetch_url, is_user, languages_list } from "../utils/";
 import "../Styles/App.css";
+import "../Styles/Responsive.css";
 import {
     TextArea,
     Spinner,
@@ -128,7 +129,7 @@ const Box = (props: any) => {
                         options={languages_list}
                     />
                     <hr />
-                    <label htmlFor="">Paste Type: </label> {"   "}
+                    <label htmlFor="">Paste Type: </label> {"   "}&nbsp;
                     <select
                         id="exposure"
                         name="paste_type"

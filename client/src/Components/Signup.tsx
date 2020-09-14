@@ -100,7 +100,7 @@ function Signup() {
                     <Button
                         type="submit"
                         onClick={submit_form}
-                        icon="send-to"
+                        icon="new-object"
                         intent="success"
                     >
                         Signup
@@ -142,5 +142,4 @@ function Signup() {
         </>
     );
 }
-
 export default Signup;

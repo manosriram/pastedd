@@ -77,18 +77,12 @@ input[type="text"] {
 }
 
 .card {
-    width: 50%;
-    height: 15vh;
-    background-color: #ff7373;
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    padding-top: 10px;
-    margin: auto;
+    background: #ff7373;
+    text-align: center;
+    margin: 30vh auto;
+    width: 50vw;
+    height: auto;
+    padding: 30px;
 }
 
 #latest-pastes {
@@ -126,4 +120,30 @@ input[type="text"] {
     resize: none;
     outline: none;
     padding: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 15vw;
+    height: 5vh;
+    font-size: 2vh;
+}
+
+select,
+#select_form {
+    width: 15vw;
+    font-size: 2vh;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    font-size: 2vh;
+}
+
+button[type="submit"] {
+    width: auto;
+    height: 3vh;
+    font-size: 2vh;
 }

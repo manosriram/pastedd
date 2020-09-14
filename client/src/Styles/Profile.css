@@ -1,7 +1,6 @@
 #stats {
-    width: 45%;
+    width: 90%;
     margin: 5%;
-    float: left;
 }
 
 #see-pastes:hover {
@@ -13,17 +12,17 @@
     color: blue;
 }
 
+@media only screen and (min-width: 1224px) {
+    #all-pastes {
+        margin: 5%;
+        max-width: 95vh;
+        overflow-y: scroll;
+    }
+}
 #paste_name:hover {
     cursor: pointer;
     color: blue;
     text-decoration: underline;
-}
-
-#all-pastes {
-    float: right;
-    margin: 5%;
-    max-width: 95vh;
-    overflow-y: scroll;
 }
 
 th,
