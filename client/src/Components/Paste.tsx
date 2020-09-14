@@ -28,6 +28,7 @@ const message_toast = Toaster.create({
 function Paste(props: any) {
     const { paste_id } = useParams();
     const [paste, set_paste] = useState<any>({});
+    const [message, set_paste_message] = useState<string>("");
     const [rct, set_redirect] = useState<boolean>(false);
     const [spin, set_spin] = useState<boolean>(false);
     const [edit, set_edit] = useState<boolean>(false);
@@ -43,7 +44,11 @@ function Paste(props: any) {
         console.log(response);
         if (response.success) {
             set_paste(response.paste);
-        } else set_paste(null);
+        } else {
+            set_paste(null);
+            message_toast.show({ intent: "danger", message: response.message });
+            set_paste_message(response.message);
+        }
     };
 
     const update_code_syntax_highlighting = () => {
@@ -74,16 +79,25 @@ function Paste(props: any) {
     };
 
     const clone_paste = async () => {
+        set_spin(true);
         const response = await fetch_url("/p/create_paste/", "POST", {
             paste_syntax: paste.paste_syntax,
             paste_name: paste.paste_name,
             paste_content: paste.paste_content,
             paste_type: paste.paste_type,
-            paste_expiry_at: paste.paste_expiry_at,
+            paste_expiry_at: paste.expiry_option,
             clone: true
         });
-        console.log(response);
-        // props.history.push(`/u/${user.user_name}`);
+        if (response.success) {
+            props.history.push(`/u/${user.user_name}`);
+            message_toast.show({
+                intent: "success",
+                message: "Paste Cloned!"
+            });
+        } else {
+            message_toast.show({ intent: "danger", message: response.message });
+        }
+        set_spin(false);
     };
 
     useEffect(() => {
@@ -100,7 +114,7 @@ function Paste(props: any) {
                 <Card className="card" interactive={true}>
                     <h3>Paste not found.</h3>
                     <br />
-                    <p>This paste may have expired or deleted by the user.</p>
+                    <p>{message}</p>
                 </Card>
             </>
         );

@@ -1,12 +1,13 @@
 import express, { Request, Response, NextFunction } from "express";
 import { PasteService } from "../../services/pastes/";
 import { decrypt_buffer } from "../../utils/";
-// import axios from "axios";
+import { can_view } from "../../middlewares/pastes";
 
 const router: express.Router = express.Router();
 
 router.get(
     "/:paste_id",
+    can_view,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { paste_id } = req.params;
@@ -18,7 +19,6 @@ router.get(
 
             paste!.paste_hits += 1;
             await paste!.save();
-            console.log(paste);
             const decrypted_buffer = decrypt_buffer(
                 Buffer.from(paste!.paste_content)
             );
