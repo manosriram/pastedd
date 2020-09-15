@@ -1,5 +1,19 @@
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    #right {
+        width: 100%;
+        margin: 0;
+    }
+
+    #tag-link,
+    .tag-link {
+        font-size: 1.7vh;
+    }
+
+    #top-paste-name {
+        margin-top: 5px;
+    }
+
     .App,
     select,
     #select_form {
@@ -59,7 +73,7 @@
     }
 
     #all-pastes {
-        margin: 10px;
+        margin: auto;
     }
 }
 

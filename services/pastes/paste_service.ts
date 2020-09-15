@@ -1,4 +1,5 @@
 import { Paste } from "../../models/Paste";
+import { User } from "../../models/User";
 import { nanoid } from "nanoid";
 import { current_user, encrypt_buffer, decrypt_buffer } from "../../utils/";
 import axios from "axios";
@@ -20,7 +21,7 @@ class PasteService {
         let now = new Date().getTime();
         now += parseInt(paste_options.paste_expiry_at);
 
-        paste_options.expiry_option = paste_options.paste_expiry_at;
+        paste_options.expiry_option = parseInt(paste_options.paste_expiry_at);
         paste_options.paste_expiry_at = new Date(now);
         paste_options.paste_id = nanoid(5);
         paste_options.last_modified_at = paste_options.paste_created_at;
@@ -88,9 +89,30 @@ class PasteService {
 
     // Deletes a paste by id.
     async delete_paste(paste_id: string) {
-        return await Paste.findOneAndDelete({
-            paste_id: paste_id
-        });
+        const paste = await Paste.findOne({ paste_id });
+        if (!paste) return null;
+        const user = (await User.findOne({ user_name: paste.user })) as any;
+
+        if (user) {
+            const pc = user.paste_count;
+            switch (paste.paste_type) {
+                case "public":
+                    pc.public_pcount -= 1;
+                    pc.pd_public_pcount -= 1;
+                    break;
+                case "private":
+                    pc.pd_private_pcount -= 1;
+                    pc.private_pcount -= 1;
+                    break;
+                case "unlisted":
+                    pc.pd_unlisted_pcount -= 1;
+                    pc.unlisted_pcount -= 1;
+                    break;
+            }
+        }
+        await user.save();
+        await paste.remove();
+        return paste;
     }
 
     // Updates a paste by id.
@@ -115,8 +137,7 @@ class PasteService {
 
         pastes.map(async (paste, paste_index) => {
             if (has_expired(paste.paste_expiry_at)) {
-                // decrement type: paste-count
-                await Paste.deleteOne({ paste_id: paste.paste_id });
+                this.delete_paste(paste.paste_id);
             } else {
                 paste.paste_content = decrypt_buffer(
                     Buffer.from(paste.paste_content, "utf8")

@@ -20,7 +20,6 @@ class PasteAccessService {
     async per_day_check(user: any) {
         const now = new Date().getTime();
         const renew = new Date(user.next_renew).getTime();
-        console.log(user);
 
         // New day, reset variables and grant permission (return true).
         if (now - renew > 0) {
@@ -41,7 +40,6 @@ class PasteAccessService {
                 pd_private_pcount,
                 pd_unlisted_pcount
             } = user.paste_count;
-            console.log("IN");
             if (
                 pd_public_pcount + pd_unlisted_pcount + pd_private_pcount >=
                 Limits_FREE.PER_DAY_LIMIT
@@ -93,11 +91,10 @@ class PasteAccessService {
                 // If the per-day-paste limit is satisfied, check the user's free paste limitations.
                 const pdc = await this.per_day_check(current_user!);
                 if (pdc) {
-                    return true;
-                    // return this.can_user_paste_free(
-                    // current_user,
-                    // req.body.paste_type
-                    // );
+                    return this.can_user_paste_free(
+                        current_user,
+                        req.body.paste_type
+                    );
                 } else return false;
             }
         } catch (e) {

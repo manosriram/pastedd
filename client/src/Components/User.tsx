@@ -28,11 +28,20 @@ function User(props: any) {
         user_name: undefined
     });
     const [spin, set_spin] = useState<boolean>(false);
+    const [pu_count, set_pu_count] = useState<any>([]);
+    const [nm, set_name] = useState<string>("");
 
     const get_user_pastes = async (name: string) => {
         const url = `/p/user/${name}`;
         const user_pastes = await fetch_url(url, "GET");
         set_user_pastes(user_pastes.pastes);
+        set_pu_count(
+            user_pastes.pastes.filter(
+                (paste: any) =>
+                    paste.paste_type === "private" &&
+                    paste.paste_type === "unlisted"
+            )
+        );
     };
 
     const current_user = async () => {
@@ -44,7 +53,6 @@ function User(props: any) {
         try {
             const url = `/u/${name}`;
             const current_user = await fetch_url(url, "GET");
-            console.log(current_user);
             if (!current_user.user) {
                 set_user(null);
             }
@@ -60,9 +68,10 @@ function User(props: any) {
         set_spin(true);
         const user_prof = async () => {
             const name = location.pathname.split("/")[2];
+            set_name(name);
+            await current_user();
             await get_user(name);
-            get_user_pastes(name);
-            current_user();
+            await get_user_pastes(name);
             set_spin(false);
         };
         user_prof();
@@ -126,13 +135,17 @@ function User(props: any) {
                                     user.paste_count.pd_public_pcount +
                                     user.paste_count.pd_unlisted_pcount)}
                         </strong>
-                        {"  "} (Renews {moment(user.next_renew).calendar()})
+                        <br />
+                        <strong>
+                            (Renews {moment(user.next_renew).calendar()})
+                        </strong>
                     </p>
+
                     <p>Private and Unlisted pastes are only visible to you.</p>
                     <br />
                 </Card>
             </div>
-            {!user_pastes.length ? (
+            {!(user_pastes.length - pu_count.length && cu.user_name === nm) ? (
                 <Card interactive={true} id="no-paste">
                     No live pastes.
                 </Card>

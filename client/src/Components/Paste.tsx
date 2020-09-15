@@ -19,6 +19,7 @@ import moment from "moment";
 import hljs from "highlight.js";
 import { CodeHighlight } from "./CodeHighlighter.js";
 import { Home } from "./";
+import "../Styles/Responsive.css";
 
 const message_toast = Toaster.create({
     className: "ex",
@@ -41,13 +42,11 @@ function Paste(props: any) {
 
     const get_paste_on_start = async () => {
         const response = await get_paste(paste_id);
-        console.log(response);
         if (response.success) {
             set_paste(response.paste);
         } else {
             set_paste(null);
-            message_toast.show({ intent: "danger", message: response.message });
-            set_paste_message(response.message);
+            set_paste_message("Paste not found.");
         }
     };
 
@@ -56,7 +55,6 @@ function Paste(props: any) {
             console.log(block);
             hljs.highlightBlock(block);
         });
-        set_spin(false);
     };
 
     const delete_pst = async () => {
@@ -101,10 +99,14 @@ function Paste(props: any) {
     };
 
     useEffect(() => {
-        set_spin(true);
-        get_current_user();
-        get_paste_on_start();
-        update_code_syntax_highlighting();
+        const startup = async () => {
+            set_spin(true);
+            get_current_user();
+            get_paste_on_start();
+            update_code_syntax_highlighting();
+            set_spin(false);
+        };
+        startup();
     }, []);
 
     if (spin) return <Spinner className="spin" intent="primary" />;
@@ -121,7 +123,7 @@ function Paste(props: any) {
         return (
             <>
                 <div className="App">
-                    <Callout>
+                    <Callout id="top-paste-name" className="tag-link">
                         {paste.paste_name}
                         <label id="hits" htmlFor="icon">
                             {paste.paste_hits} hits
@@ -143,10 +145,25 @@ function Paste(props: any) {
                                 });
                             }}
                         >
-                            copy
+                            copy paste
                         </Tag>
                         {"  "}
                         <Tag id="tag-link">print</Tag>
+                        {"   "}
+                        <Tag
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    window.location.href
+                                );
+                                message_toast.show({
+                                    intent: "success",
+                                    message: "Link copied to clipboard"
+                                });
+                            }}
+                            id="tag-link"
+                        >
+                            copy paste link
+                        </Tag>
                         {user && user.user_name === paste.user && (
                             <>
                                 {"  "}

@@ -44,10 +44,9 @@ td {
 }
 
 #no-paste {
-    float: right;
     margin: 5%;
     text-align: center;
-    width: 30%;
+    width: auto;
     background: #1f4b99;
     color: white;
 }
