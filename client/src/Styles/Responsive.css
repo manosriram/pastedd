@@ -25,6 +25,11 @@
         left: 0;
     }
 
+    select,
+    #select_form {
+        margin-top: 5px;
+    }
+
     input[type="password"],
     input[type="email"],
     input[type="text"] {
@@ -89,6 +94,31 @@
 
 /* iPads (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body {
+        font-size: 2vh;
+    }
+    span {
+        font-size: 1.7vh;
+    }
+    #right {
+        width: 100%;
+        margin: 0;
+    }
+
+    .bp3-callout {
+        font-size: 1.8vh;
+    }
+
+    #tag-link,
+    .tag-link {
+        font-size: 1.7vh;
+        border-radius: 2px;
+    }
+
+    #top-paste-name {
+        margin-top: 9px;
+    }
+
     .App,
     select,
     #select_form {
@@ -99,18 +129,78 @@
         top: 0;
         left: 0;
     }
+
+    select,
+    #select_form {
+        margin: 5px;
+    }
+
+    select,
+    #select_form,
+    input[type="password"],
+    input[type="email"],
+    input[type="text"] {
+        width: 50%;
+    }
+
+    #related-links {
+        display: none;
+    }
+
+    th,
+    #paste_name {
+        font-size: 2vh;
+    }
+
+    #paste-name {
+        height: auto;
+        margin-left: 1.5px;
+    }
+
+    .signup-container {
+        margin: auto;
+        width: 100%;
+    }
+
+    .signup-container input,
+    .signup-container button {
+        margin: 5px 5px 5px 0;
+    }
+
+    .signup-container h3 {
+        text-align: center;
+    }
+
+    .signup-container button {
+        width: 50%;
+        height: 5vh;
+        font-size: 2vh;
+        margin-left: 25%;
+    }
+
     #stats {
         min-width: 90%;
         float: none;
     }
+
+    #ex,
+    #ht,
+    #cr,
+    #sy {
+        display: none;
+    }
+
+    .lock {
+        color: black;
+    }
+
     #all-pastes {
-        margin: 5%;
+        margin: auto;
     }
 }
 
 /* iPads (landscape) ----------- */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-    /* STYLES GO HERE */
 }
 
 /* iPads (portrait) ----------- */

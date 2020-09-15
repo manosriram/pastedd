@@ -146,6 +146,7 @@ const Box = (props: any) => {
                     <label htmlFor="">Paste Name: </label>
                     {"   "}
                     <input
+                        id="paste-name"
                         type="text"
                         placeholder="Paste Name"
                         name="paste_name"

@@ -148,7 +148,6 @@ function Paste(props: any) {
                             copy paste
                         </Tag>
                         {"  "}
-                        <Tag id="tag-link">print</Tag>
                         {"   "}
                         <Tag
                             onClick={() => {
@@ -194,17 +193,23 @@ function Paste(props: any) {
                     </CodeHighlight>
                 </div>
                 <div id="right">
-                    <Callout title="Paste Stats" contentEditable={false}>
-                        <Icon icon="console" /> {paste.paste_syntax}
+                    <Callout
+                        id="title-stat"
+                        title="Paste Stats"
+                        contentEditable={false}
+                    >
+                        <Icon className="icon" icon="console" />{" "}
+                        {paste.paste_syntax}
                         <br />
-                        <Icon icon="eye-open" /> {paste.paste_type}
+                        <Icon className="icon" icon="eye-open" />{" "}
+                        {paste.paste_type}
                         <br />
-                        <Icon icon="calendar" />{" "}
+                        <Icon className="icon" icon="calendar" />{" "}
                         {moment(paste.paste_created_at).format(
                             "MMMM Do YYYY, h:mm:ss a"
                         )}
                         <br />
-                        <Icon icon="stopwatch" />{" "}
+                        <Icon className="icon" icon="stopwatch" />{" "}
                         {moment(paste.paste_expiry_at).format(
                             "MMMM Do YYYY, h:mm:ss a"
                         )}

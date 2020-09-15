@@ -28,7 +28,7 @@ body {
 .App {
     margin: 2%;
     padding: 1%;
-    width: 65%;
+    width: 60%;
     margin-left: 2%;
     float: left;
 }
@@ -46,11 +46,10 @@ input[type="text"] {
     float: right;
 }
 #right {
-    float: left;
+    float: right;
     width: 30%;
     margin: 2%;
     padding: 1%;
-    width: 25%;
     margin-left: 2%;
 }
 
@@ -102,21 +101,6 @@ input[type="text"] {
     margin: 2px;
 }
 
-@media print {
-    body * {
-        visibility: hidden;
-    }
-    .paste-content,
-    .paste-content * {
-        visibility: visible;
-    }
-    .paste-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-}
-
 #paste-area {
     font-size: 15px;
     text-decoration: none;
@@ -137,7 +121,6 @@ input[type="password"] {
 
 select,
 #select_form {
-    width: auto;
     font-size: 2vh;
 }
 

@@ -97,12 +97,12 @@ function User(props: any) {
                             <strong>{user.user_name}'s Pastedd</strong>
                         </h4>
                         {"  "}
+                        <Icon icon="calendar" />
+                        {"  "}
                         {diff === 0 ? (
-                            <p>Joined today</p>
+                            <span>Joined today</span>
                         ) : (
                             <>
-                                <Icon icon="calendar" />
-                                {"  "}
                                 <span>Joined {diff} days ago</span>
                             </>
                         )}
