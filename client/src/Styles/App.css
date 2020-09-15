@@ -23,6 +23,7 @@ body {
     height: 20vh;
     float: right;
     margin-right: 15%;
+    display: none;
 }
 .App {
     margin: 2%;
@@ -125,14 +126,14 @@ input[type="text"] {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    width: 15vw;
-    height: 5vh;
+    width: 25vw;
+    height: 4.5vh;
     font-size: 2vh;
 }
 
 select,
 #select_form {
-    width: 15vw;
+    width: auto;
     font-size: 2vh;
 }
 
@@ -144,6 +145,6 @@ input[type="password"]::placeholder {
 
 button[type="submit"] {
     width: auto;
-    height: 3vh;
+    height: 4vh;
     font-size: 2vh;
 }

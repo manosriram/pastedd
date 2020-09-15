@@ -8,16 +8,29 @@
     color: lightblue;
 }
 
+#all-pastes {
+    width: 100%;
+    text-align: center;
+}
+
 #paste_name {
     color: blue;
 }
 
+td {
+    width: 1px;
+    white-space: nowrap;
+}
+
+.pn {
+    width: 90%;
+}
+
+table {
+    margin: 5%;
+}
+
 @media only screen and (min-width: 1224px) {
-    #all-pastes {
-        margin: 5%;
-        max-width: 95vh;
-        overflow-y: scroll;
-    }
 }
 #paste_name:hover {
     cursor: pointer;

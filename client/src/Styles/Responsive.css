@@ -59,10 +59,7 @@
     }
 
     #all-pastes {
-        width: 100%;
-        background: #b3cfff;
-        float: left;
-        border-radius: 5px;
+        margin: 10px;
     }
 }
 

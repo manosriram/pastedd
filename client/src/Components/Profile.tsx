@@ -38,12 +38,15 @@ function Profile(props: any) {
             let url = "/u/current_user";
             if (un) url = `/u/${un}`;
             const current_user = await fetch_url(url, "GET");
+            console.log(current_user);
             if (!current_user.user) {
                 set_user(null);
+                return null;
+            } else {
+                set_user(current_user.user);
+                set_diff(moment().diff(current_user.user.created_at, "days"));
+                return current_user.user.user_name;
             }
-            set_user(current_user.user);
-            set_diff(moment().diff(current_user.user.created_at, "days"));
-            return current_user.user.user_name;
         } catch (e) {
             console.log(e);
         }
@@ -56,8 +59,10 @@ function Profile(props: any) {
         const user_prof = async () => {
             const username = await get_user();
             if (username) props.history.push(`/u/${username}`);
+            else props.history.push("/");
         };
         user_prof();
+        set_spin(false);
     }, []);
 
     /*
