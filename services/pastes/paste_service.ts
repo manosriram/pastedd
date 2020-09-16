@@ -32,6 +32,34 @@ class PasteService {
         return new_paste.paste_id;
     }
 
+    // Deletes a paste by id.
+    async delete_paste(paste_id: string) {
+        const paste = await Paste.findOne({ paste_id });
+        if (!paste) return null;
+        const user = (await User.findOne({ user_name: paste.user })) as any;
+
+        if (user) {
+            const pc = user.paste_count;
+            switch (paste.paste_type) {
+                case "public":
+                    pc.public_pcount -= 1;
+                    pc.pd_public_pcount -= 1;
+                    break;
+                case "private":
+                    pc.pd_private_pcount -= 1;
+                    pc.private_pcount -= 1;
+                    break;
+                case "unlisted":
+                    pc.pd_unlisted_pcount -= 1;
+                    pc.unlisted_pcount -= 1;
+                    break;
+            }
+        }
+        await user.save();
+        await paste.remove();
+        return paste;
+    }
+
     async can_view_paste(req: Request, paste_id: string) {
         const paste = await Paste.findOne({ paste_id });
         if (!paste) return { success: false, message: "Paste not found." };
@@ -39,7 +67,7 @@ class PasteService {
         switch (paste?.paste_type) {
             case "public":
                 if (has_expired(paste.paste_expiry_at)) {
-                    Paste.deleteOne({ paste_id });
+                    this.delete_paste(paste_id);
                     return {
                         success: false,
                         message: "Paste has expired or deleted by user."
@@ -47,7 +75,7 @@ class PasteService {
                 } else return { success: true, paste };
             case "unlisted":
                 if (has_expired(paste.paste_expiry_at)) {
-                    Paste.deleteOne({ paste_id });
+                    this.delete_paste(paste_id);
                     return {
                         success: false,
                         message: "Paste has expired or deleted by user."
@@ -87,34 +115,6 @@ class PasteService {
         return paste;
     }
 
-    // Deletes a paste by id.
-    async delete_paste(paste_id: string) {
-        const paste = await Paste.findOne({ paste_id });
-        if (!paste) return null;
-        const user = (await User.findOne({ user_name: paste.user })) as any;
-
-        if (user) {
-            const pc = user.paste_count;
-            switch (paste.paste_type) {
-                case "public":
-                    pc.public_pcount -= 1;
-                    pc.pd_public_pcount -= 1;
-                    break;
-                case "private":
-                    pc.pd_private_pcount -= 1;
-                    pc.private_pcount -= 1;
-                    break;
-                case "unlisted":
-                    pc.pd_unlisted_pcount -= 1;
-                    pc.unlisted_pcount -= 1;
-                    break;
-            }
-        }
-        await user.save();
-        await paste.remove();
-        return paste;
-    }
-
     // Updates a paste by id.
     async update_paste(paste_id: string, options: any) {
         options.paste_content = encrypt_buffer(options.paste_content);
@@ -135,7 +135,7 @@ class PasteService {
             paste_created_at: -1
         });
 
-        pastes.map(async (paste, paste_index) => {
+        pastes.map(async (paste: any, paste_index: number) => {
             if (has_expired(paste.paste_expiry_at)) {
                 this.delete_paste(paste.paste_id);
             } else {

@@ -127,21 +127,11 @@ function User(props: any) {
                         Tier: <strong>{user.tier}</strong>
                     </p>
                     <hr />
-                    <p>
-                        Pastes Remaining today:{" "}
-                        <strong>
-                            {40 -
-                                (user.paste_count.pd_private_pcount +
-                                    user.paste_count.pd_public_pcount +
-                                    user.paste_count.pd_unlisted_pcount)}
-                        </strong>
-                        <br />
-                        <strong>
-                            (Renews {moment(user.next_renew).calendar()})
-                        </strong>
-                    </p>
-
-                    <p>Private and Unlisted pastes are only visible to you.</p>
+                    <strong>
+                        <p>
+                            Private and Unlisted pastes are only visible to you.
+                        </p>
+                    </strong>
                     <br />
                 </Card>
             </div>
