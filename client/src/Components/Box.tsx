@@ -1,6 +1,4 @@
-import { Paste, NewPastes } from "./";
-import React, { useState, useEffect, useContext } from "react";
-import { Input, LinkTag } from "../Styled-Components";
+import React, { useState, useEffect } from "react";
 import { fetch_url, is_user, languages_list } from "../utils/";
 import "../Styles/App.css";
 import "../Styles/Responsive.css";
@@ -29,7 +27,6 @@ const message_toast = Toaster.create({
 
 const Box = (props: any) => {
     const [user, set_user] = useState<boolean>(is_user());
-    const [paste_id, set_paste_id] = useState<string>("");
     const [paste_form, set_paste_form] = useState<PasteForm>({
         paste_syntax: "",
         paste_name: "",

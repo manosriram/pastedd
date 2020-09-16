@@ -7,6 +7,11 @@ body {
     padding: 5px;
 }
 
+.about {
+    font-size: 2vh;
+    margin: 2%;
+}
+
 .signup-container {
     margin: 5%;
     padding: 1%;

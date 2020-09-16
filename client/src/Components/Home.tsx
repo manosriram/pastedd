@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import { Box } from "./";
 
 const Home = (props: any) => {

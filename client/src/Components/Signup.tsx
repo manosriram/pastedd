@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input, LinkTag } from "../Styled-Components/";
 import "../Styles/App.css";
 import { fetch_url } from "../utils/";
 
-import {
-    Spinner,
-    Button,
-    IToasterProps,
-    IToastProps,
-    Label,
-    NumericInput,
-    Position,
-    ProgressBar,
-    Switch,
-    Toaster,
-    ToasterPosition
-} from "@blueprintjs/core";
+import { Spinner, Button, Position, Toaster } from "@blueprintjs/core";
 
 const message_toast = Toaster.create({
     className: "ex",
@@ -81,18 +69,21 @@ function Signup() {
                         type="email"
                         name="email"
                         placeholder="Email Address"
+                        defaultValue={user_det.email}
                         required
                     />
                     <Input
                         type="text"
                         name="user_name"
                         placeholder="Username (4 min)"
+                        defaultValue={user_det.user_name}
                         required
                     />
                     <Input
                         type="password"
                         name="password"
                         placeholder="Password (4 min)"
+                        defaultValue={user_det.password}
                         required
                     />
                     <br />

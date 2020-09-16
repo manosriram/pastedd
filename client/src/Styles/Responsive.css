@@ -5,6 +5,10 @@
         margin: 0;
     }
 
+    #left {
+        width: 100%;
+    }
+
     #tag-link,
     .tag-link {
         font-size: 1.7vh;
@@ -140,7 +144,7 @@
     input[type="password"],
     input[type="email"],
     input[type="text"] {
-        width: 50%;
+        width: 70%;
     }
 
     #related-links {
@@ -159,6 +163,7 @@
 
     .signup-container {
         margin: auto;
+        text-align: center;
         width: 100%;
     }
 
@@ -172,10 +177,9 @@
     }
 
     .signup-container button {
-        width: 50%;
+        width: 70%;
         height: 5vh;
         font-size: 2vh;
-        margin-left: 25%;
     }
 
     #stats {

@@ -4,7 +4,8 @@ import "../Styles/Responsive.css";
 import { Spinner, Card, Callout, Icon } from "@blueprintjs/core";
 import { fetch_url } from "../utils/";
 import moment from "moment";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 function User(props: any) {
     const location = useLocation();
@@ -90,6 +91,10 @@ function User(props: any) {
 
     return (
         <>
+            <Helmet>
+                <title>{user.user_name}</title>
+                <meta name="description" content="Pastedd User Profile" />
+            </Helmet>
             <div id="stats">
                 <Card>
                     <Callout>

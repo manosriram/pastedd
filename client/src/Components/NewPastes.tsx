@@ -1,6 +1,4 @@
 import React from "react";
-import { Callout, Card, Elevation } from "@blueprintjs/core";
-
 const pastes = ["one", "two", "three", "four", "five", "six", "seven"];
 
 function NewPastes() {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input, LinkTag } from "../Styled-Components/";
 import "../Styles/App.css";
 import "../Styles/Responsive.css";
@@ -7,15 +7,8 @@ import Cookie from "js-cookie";
 import {
     Spinner,
     Button,
-    IToasterProps,
-    IToastProps,
-    Label,
-    NumericInput,
     Position,
-    ProgressBar,
-    Switch,
     Toaster,
-    ToasterPosition
 } from "@blueprintjs/core";
 
 const message_toast = Toaster.create({
@@ -28,7 +21,6 @@ function Signin() {
         user_name: "",
         password: ""
     });
-    const [is_signed_in, set_signed_in] = useState<boolean>(false);
     const [spin, set_spin] = useState<boolean>(false);
 
     const handle_signin = (e: any) => {
@@ -83,12 +75,14 @@ function Signin() {
                         type="text"
                         name="user_name"
                         placeholder="Username"
+                        defaultValue={user_det.user_name}
                         required
                     />
                     <Input
                         type="password"
                         name="password"
                         placeholder="Password"
+                        defaultValue={user_det.password}
                         required
                     />
                     <br />

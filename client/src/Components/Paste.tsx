@@ -1,25 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { get_paste, fetch_url } from "../utils/";
-import { useHistory, useParams } from "react-router-dom";
-import { TextArea } from "../Styled-Components";
+import { useParams } from "react-router-dom";
 import {
     Position,
     Toaster,
     Spinner,
-    Button,
     Icon,
-    Tabs,
-    Tab,
     Tag,
-    Callout,
-    Card
+    Callout
 } from "@blueprintjs/core";
 import "../Styles/App.css";
 import moment from "moment";
 import hljs from "highlight.js";
 import { CodeHighlight } from "./CodeHighlighter.js";
-import { Home } from "./";
 import "../Styles/Responsive.css";
+import { Helmet } from "react-helmet";
 
 const message_toast = Toaster.create({
     className: "ex",
@@ -30,9 +25,7 @@ function Paste(props: any) {
     const { paste_id } = useParams();
     const [paste, set_paste] = useState<any>({});
     const [message, set_paste_message] = useState<string>("");
-    const [rct, set_redirect] = useState<boolean>(false);
     const [spin, set_spin] = useState<boolean>(false);
-    const [edit, set_edit] = useState<boolean>(false);
     const [user, set_user] = useState<any>(false);
 
     const get_current_user = async () => {
@@ -122,6 +115,10 @@ function Paste(props: any) {
     } else {
         return (
             <>
+                <Helmet>
+                    <meta name="description" content="Pastedd Paste Info" />
+                    <title>{paste.paste_name}</title>
+                </Helmet>
                 <div id="left" className="App">
                     <Callout id="top-paste-name" className="tag-link">
                         {paste.paste_name}
