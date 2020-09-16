@@ -1,9 +1,4 @@
-import { scrypt, randomBytes } from "crypto";
-import { promisify } from "util";
-
 import bcrypt from "bcryptjs";
-
-const scryptAsync = promisify(scrypt);
 
 class PasswordService {
     // Returns a hash, given plain string.

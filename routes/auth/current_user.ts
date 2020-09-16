@@ -6,7 +6,6 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const auth_service = new AuthService();
         const user = await auth_service.current_user(req);
-        console.log(user);
 
         return res.status(200).json({ user: user || null });
     } catch (err) {

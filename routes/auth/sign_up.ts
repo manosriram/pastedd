@@ -10,7 +10,6 @@ router.post(
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { email, password, user_name } = req.body;
-            console.log(email, user_name, password);
 
             // Auth Service to handle DB Calls.
             const service = new AuthService();
