@@ -122,7 +122,7 @@ function Paste(props: any) {
     } else {
         return (
             <>
-                <div className="App">
+                <div id="left" className="App">
                     <Callout id="top-paste-name" className="tag-link">
                         {paste.paste_name}
                         <label id="hits" htmlFor="icon">
@@ -162,6 +162,14 @@ function Paste(props: any) {
                             id="tag-link"
                         >
                             copy paste link
+                        </Tag>
+                        <Tag
+                            onClick={() => {
+                                props.history.push(`/p/raw/${paste.paste_id}`);
+                            }}
+                            id="tag-link"
+                        >
+                            raw
                         </Tag>
                         {user && user.user_name === paste.user && (
                             <>

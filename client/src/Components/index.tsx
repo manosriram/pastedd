@@ -9,3 +9,4 @@ export { default as NewPastes } from "./NewPastes";
 export { default as User } from "./User";
 export { default as Edit } from "./Edit";
 export { default as Box } from "./Box";
+export { default as Raw } from "./Raw";

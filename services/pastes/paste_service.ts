@@ -24,7 +24,7 @@ class PasteService {
         paste_options.expiry_option = parseInt(paste_options.paste_expiry_at);
         paste_options.paste_expiry_at = new Date(now);
         paste_options.paste_id = nanoid(5);
-        paste_options.last_modified_at = paste_options.paste_created_at;
+        paste_options.paste_created_at = Date.now();
 
         const new_paste = Paste.build(paste_options);
         await new_paste.save();

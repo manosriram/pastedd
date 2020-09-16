@@ -199,9 +199,9 @@ function User(props: any) {
                                                         : paste.paste_name}
                                                 </td>
                                                 <td id="cr">
-                                                    {moment().to(
+                                                    {moment(
                                                         paste.paste_created_at
-                                                    )}
+                                                    ).calendar()}
                                                 </td>
                                                 <td id="sy">
                                                     {paste.paste_syntax}

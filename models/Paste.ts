@@ -46,8 +46,7 @@ const paste_schema = new mongoose.Schema(
         },
         paste_created_at: {
             type: Date,
-            default: Date.now(),
-            immutable: true
+            default: Date.now()
         },
         paste_expiry_at: {
             type: Date,
@@ -55,10 +54,8 @@ const paste_schema = new mongoose.Schema(
             required: false
         },
         last_modified_at: {
-            type: Number,
-            default: new Date().getTime(),
-            immutable: false,
-            required: false
+            type: Date,
+            default: Date.now()
         },
         paste_type: {
             type: String,
