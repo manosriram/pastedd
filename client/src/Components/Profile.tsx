@@ -38,7 +38,6 @@ function Profile(props: any) {
             let url = "/u/current_user";
             if (un) url = `/u/${un}`;
             const current_user = await fetch_url(url, "GET");
-            console.log(current_user);
             if (!current_user.user) {
                 set_user(null);
                 return null;

@@ -38,7 +38,7 @@ function User(props: any) {
         set_pu_count(
             user_pastes.pastes.filter(
                 (paste: any) =>
-                    paste.paste_type === "private" &&
+                    paste.paste_type === "private" ||
                     paste.paste_type === "unlisted"
             )
         );
@@ -145,7 +145,7 @@ function User(props: any) {
                     <br />
                 </Card>
             </div>
-            {!(user_pastes.length - pu_count.length && cu.user_name === nm) ? (
+            {user_pastes.length === pu_count.length && cu.user_name !== nm ? (
                 <Card interactive={true} id="no-paste">
                     No live pastes.
                 </Card>
