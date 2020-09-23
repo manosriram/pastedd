@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import path from "path";
 const app = express();
 const PORT = process.env.PORT || 6464;
 
@@ -53,6 +54,12 @@ app.use("/p/update_paste/", update_paste_router);
 app.use("/p/", get_paste_router);
 
 app.use(error_handler);
+
+app.get("/*", (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"), err => {
+        res.status(500).send(err);
+    });
+});
 
 startDB();
 app.listen(PORT, () => console.log(`Paste-Server at ${PORT}`));
